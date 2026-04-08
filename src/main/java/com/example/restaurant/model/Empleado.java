@@ -12,4 +12,5 @@ public class Empleado {
 
     private String Nombre;
     private String Apellidos;
+    private Integer edad;
 }
