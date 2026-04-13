@@ -1,6 +1,8 @@
 package com.example.restaurant.model;
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDate;
 /*...*/
 @Entity
 @Table(name = "Restaurantes")
@@ -20,6 +22,25 @@ public class Restaurante {
     private Boolean activo = true;
 
     private Integer numero_empleados;
+
+    // fecha de fundación
+    @CreationTimestamp
+    private LocalDate starDate = LocalDate.now();
+
+    // tipo de comida
+
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_comida")
+    private TipoComida tipoComida = TipoComida.SPANISH;
+
+    public TipoComida getTipoComida() {
+        return tipoComida;
+    }
+
+    public void setTipoComida(TipoComida tipoComida) {
+        this.tipoComida = tipoComida;
+    }
 
     public Restaurante(String nombre, Double precioMedio, Integer numero_empleados) {
         this.nombre = nombre;
@@ -77,7 +98,17 @@ public class Restaurante {
                 ", precioMedio=" + precioMedio +
                 ", activo=" + activo +
                 ", numero_empleados=" + numero_empleados +
+                ", starDate=" + starDate +
+                ", tipoComida=" + tipoComida +
                 '}';
+    }
+
+    public LocalDate getStarDate() {
+        return starDate;
+    }
+
+    public void setStarDate(LocalDate starDate) {
+        this.starDate = starDate;
     }
     // Proximas tareas:
     // Enum

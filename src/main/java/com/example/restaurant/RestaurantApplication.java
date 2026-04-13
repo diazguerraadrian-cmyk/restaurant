@@ -7,7 +7,9 @@ import com.example.restaurant.model.Restaurante;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @SpringBootApplication
 public class RestaurantApplication {
@@ -68,6 +70,52 @@ public class RestaurantApplication {
         for (Empleado empleado : empleados) {
             System.out.println(empleado);
         }
+        Restaurante r1 = new Restaurante("R1", 10.0, 3);
+        Restaurante r2 = new Restaurante("R2", 15.0, 4);
+        // opción clásica para crear lista:
+        List<Restaurante> sitiosParaComer = new ArrayList<>(); // crea una lista vacía
+
+        List<Restaurante> sitiosGuaposParaComer = List.of(r1,r2);
+        restauranteRepository.saveAll(sitiosGuaposParaComer);
+
+        long numeroRestaurantes = restauranteRepository.count();
+        if (numeroRestaurantes > 0){
+            System.out.println("Hay para comer, todos tranquis");
+        }
+        else {
+            System.out.println("Estamos en crisis, no hay restaurantes");
+        }
+
+        long id = 1;
+        boolean existe =  restauranteRepository.existsById(id);
+        if (existe = true){
+            System.out.println("El restaurante 1 si existe");
+        }
+        else {
+            System.out.println("El restaurante 1 no existe");
+        }
+        // restauranteRepository.existsById(2L);
+
+        // restauranteRepository.deleteAll();
+
+        Long idABorrar = 1L;
+        restauranteRepository.deleteById(1L); // hard coded
+        System.out.println("restaurante con id" + idABorrar + " existe : " + restauranteRepository.existsById(idABorrar));
+        // restauranteRepository.deleteById(rest.getId());
+
+        restauranteRepository.delete(r2); // le pasamos un objeto restaurante
+
+        Long idABuscar = 2L;
+        // Restaurante restauranteEncontrado = restauranteRepository.findById(idABuscar);
+        Optional<Restaurante> restauranteFromDatabase = restauranteRepository.findById(idABuscar);
+        // var restauranteFromDatabase = restaurantRepository.findById(idABuscar);
+        if (restauranteFromDatabase.isPresent()){
+            Restaurante restaurante2 = restauranteFromDatabase.get();
+            System.out.println(restaurante2);
+        }
+
+        // restauranteRepository.findById(idABuscar);
+
     }
 
 }
