@@ -14,6 +14,18 @@ public class Empleado {
     private String apellidos;
     private Integer edad;
 
+    @ManyToOne
+    @JoinColumn
+    private Restaurante restaurante;
+
+    public Restaurante getRestaurante() {
+        return restaurante;
+    }
+
+    public void setRestaurante(Restaurante restaurante) {
+        this.restaurante = restaurante;
+    }
+
     public Empleado(String nombre, String apellidos, Integer edad) {
         this.nombre = nombre;
         this.apellidos = apellidos;
@@ -51,5 +63,16 @@ public class Empleado {
 
     public void setEdad(Integer edad) {
         this.edad = edad;
+    }
+
+    @Override
+    public String toString() {
+        return "Empleado{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", apellidos='" + apellidos + '\'' +
+                ", edad=" + edad +
+                ", restaurante=" + (restaurante != null ? restaurante.getId() : null) +
+                '}';
     }
 }

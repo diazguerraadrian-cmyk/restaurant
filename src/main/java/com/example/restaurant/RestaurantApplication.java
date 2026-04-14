@@ -142,6 +142,41 @@ public class RestaurantApplication {
         restauranteRepository.save(sidreria);
         System.out.println(sidreria);
 
+        // MANY TO ONE - ASOCIAR UN RESTAURANTE A DOS EMPLEADOS
+        // Paso 1. crear restaurante y guardarlo
+
+        // Paso 2. crear empleados, setRestaurante y guardar
+
+        // Paso 3. ver en h2-console si los empleados tienen restaurante
+
+        Restaurante restauranteAsociado = new Restaurante();
+        restauranteAsociado.setNombre("Restaurante Asociado");
+        restauranteRepository.save(restauranteAsociado);
+        System.out.println(restauranteAsociado);
+
+        Empleado empReal = new Empleado();
+        empReal.setNombre("Empleado Real");
+        empReal.setRestaurante(restauranteAsociado);
+        empleadoRepository.save(empReal);
+        System.out.println(empReal);
+
+        Empleado empReal2 = new Empleado();
+        empReal2.setNombre("Empleado Real 2");
+        empReal2.setRestaurante(restauranteAsociado);
+        empleadoRepository.save(empReal2);
+        System.out.println(empReal2);
+
+        // bucle for para iterar sobre todos los empleados imprimiendo el nombre del empleado y el nombre del restaurante
+        // si lo tiene
+        for (Empleado empleado : empleadoRepository.findAll()) {
+            System.out.println("Empleado: " + empleado.getNombre());
+            if (empleado.getRestaurante() != null) {
+                System.out.println("Restaurante: " + empleado.getRestaurante().getNombre());
+            } else {
+                System.out.println("No tiene restaurante asociado");
+            }
+        }
+
 
     }
 
