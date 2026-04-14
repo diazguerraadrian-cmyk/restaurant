@@ -175,6 +175,16 @@ public class RestaurantApplication {
             } else {
                 System.out.println("No tiene restaurante asociado");
             }
+            // probar a filtrar por nombre de restaurante
+            // List<Empleado> empleados20 = empleadoRepository.findByEdad(20);
+            List<Empleado> empleadosRestaurante = empleadoRepository.findByRestauranteNombre("Restaurante Asociado");
+            System.out.println(empleadosRestaurante);
+
+            // filtrar por apellido
+            // filtrar por edad
+
+
+
         }
 
 
