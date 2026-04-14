@@ -4,9 +4,11 @@ import com.example.restaurant.Repository.EmpleadoRepository;
 import com.example.restaurant.Repository.RestauranteRepository;
 import com.example.restaurant.model.Empleado;
 import com.example.restaurant.model.Restaurante;
+import com.example.restaurant.model.TipoComida;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -114,7 +116,32 @@ public class RestaurantApplication {
             System.out.println(restaurante2);
         }
 
+        // crear un restaurante español
+        Restaurante restauranteEspañol = new Restaurante();
+        restauranteEspañol.setTipoComida(TipoComida.SPANISH);
+        restauranteRepository.save(restauranteEspañol);
+        System.out.println(restauranteEspañol);
+        // crear un restaurante de comida japonesa
+        Restaurante restauranteJapones = new Restaurante();
+        restauranteJapones.setTipoComida(TipoComida.JAPANESE);
+        restauranteRepository.save(restauranteJapones);
+        System.out.println(restauranteJapones);
+        // probar fecha de startDate del restaurante
+
+        Restaurante smashBurger = new Restaurante();
+        smashBurger.setStarDate(LocalDate.now()); // fecha actual
+        smashBurger.setNombre("Smash Burger");
+        restauranteRepository.save(smashBurger);
+        System.out.println(smashBurger);
         // restauranteRepository.findById(idABuscar);
+
+        // fecha futura
+        Restaurante sidreria = new Restaurante();
+        sidreria.setNombre("Sidreria");
+        sidreria.setStarDate(LocalDate.of(2025, 1, 1));
+        restauranteRepository.save(sidreria);
+        System.out.println(sidreria);
+
 
     }
 

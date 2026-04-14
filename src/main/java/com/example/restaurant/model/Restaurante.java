@@ -24,7 +24,7 @@ public class Restaurante {
     private Integer numero_empleados;
 
     // fecha de fundación
-    @CreationTimestamp
+    //@CreationTimestamp
     private LocalDate starDate = LocalDate.now();
 
     // tipo de comida
