@@ -1,10 +1,9 @@
 package com.example.restaurant;
 
-import com.example.restaurant.Repository.EmpleadoRepository;
-import com.example.restaurant.Repository.RestauranteRepository;
-import com.example.restaurant.model.Empleado;
-import com.example.restaurant.model.Restaurante;
-import com.example.restaurant.model.TipoComida;
+import com.example.restaurant.model.*;
+import com.example.restaurant.repository.EmpleadoRepository;
+import com.example.restaurant.repository.PlatoRepository;
+import com.example.restaurant.repository.RestauranteRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -20,8 +19,10 @@ public class RestaurantApplication {
         var context = SpringApplication.run(RestaurantApplication.class, args);
 
         // obtener los repositorios para hacer operaciones de base de datos
+        // Los repositorios nos dan las operaciones CRUD (findAll, findById, save, delete)
         RestauranteRepository restauranteRepository = context.getBean(RestauranteRepository.class);
         EmpleadoRepository empleadoRepository = context.getBean(EmpleadoRepository.class);
+        PlatoRepository platoRepository = context.getBean(PlatoRepository.class);
 
         // crear un objeto restaurante: new
         Restaurante pacoBar = new Restaurante();
@@ -178,6 +179,7 @@ public class RestaurantApplication {
             } else {
                 System.out.println("No tiene restaurante asociado");
             }
+        }
             // probar a filtrar por nombre de restaurante
             // List<Empleado> empleados20 = empleadoRepository.findByEdad(20);
             List<Empleado> empleadosRestaurante = empleadoRepository.findByRestauranteNombre("Restaurante Asociado");
@@ -202,9 +204,16 @@ public class RestaurantApplication {
             // filtrar por apellido
             // filtrar por edad
 
+            Plato plato1 = new Plato(null, "Ensalada", "de puñetazos", 5.0, TipoPlato.PRIMERO, restauranteEspañol);
+            Plato plato2 = new Plato(null, "Lentejas", "con chorizo", 8.0, TipoPlato.SEGUNDO, restauranteEspañol);
+            Plato plato3 = new Plato(null, "Tarta de queso", null, 7.50, TipoPlato.POSTRE, restauranteEspañol);
+            platoRepository.saveAll(List.of(plato1, plato2, plato3));
 
+            // platoRepository.findByPrecioLessThanEqual(10.0);
+            for (var plato : platoRepository.findByPrecioLessThanEqual(7.99)){
+                System.out.println(plato);
+            }
 
-        }
 
 
     }

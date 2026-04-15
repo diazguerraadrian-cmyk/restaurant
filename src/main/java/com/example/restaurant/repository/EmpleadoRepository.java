@@ -1,4 +1,4 @@
-package com.example.restaurant.Repository;
+package com.example.restaurant.repository;
 
 import com.example.restaurant.model.Empleado;
 import com.example.restaurant.model.TipoComida;
