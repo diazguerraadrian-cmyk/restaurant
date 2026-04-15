@@ -151,18 +151,21 @@ public class RestaurantApplication {
 
         Restaurante restauranteAsociado = new Restaurante();
         restauranteAsociado.setNombre("Restaurante Asociado");
+        restauranteAsociado.setTipoComida(TipoComida.SPANISH);
         restauranteRepository.save(restauranteAsociado);
         System.out.println(restauranteAsociado);
 
         Empleado empReal = new Empleado();
         empReal.setNombre("Empleado Real");
         empReal.setRestaurante(restauranteAsociado);
+        empReal.setEdad(18); // No
         empleadoRepository.save(empReal);
         System.out.println(empReal);
 
         Empleado empReal2 = new Empleado();
         empReal2.setNombre("Empleado Real 2");
         empReal2.setRestaurante(restauranteAsociado);
+        empReal2.setEdad(35); // Sí cumple el filtro de findByEdadGreaterThanEqual
         empleadoRepository.save(empReal2);
         System.out.println(empReal2);
 
@@ -179,6 +182,22 @@ public class RestaurantApplication {
             // List<Empleado> empleados20 = empleadoRepository.findByEdad(20);
             List<Empleado> empleadosRestaurante = empleadoRepository.findByRestauranteNombre("Restaurante Asociado");
             System.out.println(empleadosRestaurante);
+
+            System.out.println("FILTRAR EMPLEADOS POR TIPO DE COMIDA DE RESTAURANTE:");
+            empleadoRepository.findByRestaurante_TipoComida(TipoComida.SPANISH);
+            for (var empleado1 : empleadoRepository.findByRestaurante_TipoComida(TipoComida.SPANISH)) {
+                System.out.println(empleado1);
+            }
+
+            System.out.println("FILTRAR EMPLEADOS POR EDAD MAYOR O IGUAL QUE");
+            for (var empleado1 : empleadoRepository.findByEdadGreaterThanEqual(20)) {
+                System.out.println(empleado1);
+            }
+
+            System.out.println("TRAER TODOS LOS EMPLEADOS ORDENADOS POR NOMBRE POR NOMBRE ASCENDENTE A-Z");
+            for (var empleado1 : empleadoRepository.findByOrderByNombreAsc()) {
+                System.out.println(empleado1);
+            }
 
             // filtrar por apellido
             // filtrar por edad
