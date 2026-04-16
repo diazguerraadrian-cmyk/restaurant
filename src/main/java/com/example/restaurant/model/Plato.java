@@ -79,4 +79,12 @@ public class Plato {
         this.tipoPlato = tipoPlato;
         this.restaurante = restaurante;
     }
+
+    public TipoPlato getTipoPlato() {
+        return tipoPlato;
+    }
+
+    public void setTipoPlato(TipoPlato tipoPlato) {
+        this.tipoPlato = tipoPlato;
+    }
 }

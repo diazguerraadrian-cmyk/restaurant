@@ -17,9 +17,11 @@ public class LineaPedido {
 
     private Integer cantidad;
 
-    public LineaPedido(Integer i, Pedido pedido1, Plato plato1) {
+    public LineaPedido(Pedido pedido, Plato plato, Integer cantidad) {
+        this.pedido = pedido;
+        this.plato = plato;
+        this.cantidad = cantidad;
     }
-
 
     public Long getId() {
         return id;

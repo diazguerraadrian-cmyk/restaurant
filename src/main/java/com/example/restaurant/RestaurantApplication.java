@@ -230,11 +230,17 @@ public class RestaurantApplication {
             Pedido pedido2 = new Pedido(4, 2, 4.23, restauranteEspañol);
             pedidoRepository.save(pedido2);
 
-            LineaPedido lineapedido1 = new LineaPedido(1, pedido1, plato1);
-            LineaPedido lineapedido2 = new LineaPedido(2, pedido1, plato2);
-            LineaPedido lineapedido3 = new LineaPedido(3, pedido1, plato3);
+            LineaPedido lineapedido1 = new LineaPedido(pedido1, plato1, 1);
+            LineaPedido lineapedido2 = new LineaPedido(pedido1, plato2, 2);
+            LineaPedido lineapedido3 = new LineaPedido(pedido1, plato3, 3);
 
-            lineaPedidoRepository.saveAll(List.of(lineapedido1, lineapedido2, lineapedido3));
+            List<LineaPedido> lineasPedido = lineaPedidoRepository.saveAll(List.of(lineapedido1, lineapedido2, lineapedido3));
+
+            double precioTotal = 0.0;
+            for (LineaPedido lineaPedido : lineasPedido) {
+                double preciolinea = lineaPedido.getPlato().getPrecio() * lineaPedido.getCantidad();
+                precioTotal += preciolinea;
+            }
     }
 
 }
