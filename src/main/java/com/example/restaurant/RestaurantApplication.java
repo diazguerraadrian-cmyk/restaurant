@@ -214,7 +214,11 @@ public class RestaurantApplication {
                 System.out.println(plato);
             }
 
-
+            System.out.println("TRAER PLATOS DE UN RESTAURANTE ORDENADOS POR PRECIO ASCENDENTE");
+            Long restauranteId = restauranteEspañol.getId();
+            for (var plato : platoRepository.findByRestauranteIdOrderByPrecio(restauranteId)){
+                System.out.println(plato);
+            }
 
     }
 
