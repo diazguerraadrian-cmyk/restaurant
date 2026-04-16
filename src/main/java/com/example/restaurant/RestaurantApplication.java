@@ -1,9 +1,7 @@
 package com.example.restaurant;
 
 import com.example.restaurant.model.*;
-import com.example.restaurant.repository.EmpleadoRepository;
-import com.example.restaurant.repository.PlatoRepository;
-import com.example.restaurant.repository.RestauranteRepository;
+import com.example.restaurant.repository.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -23,6 +21,8 @@ public class RestaurantApplication {
         RestauranteRepository restauranteRepository = context.getBean(RestauranteRepository.class);
         EmpleadoRepository empleadoRepository = context.getBean(EmpleadoRepository.class);
         PlatoRepository platoRepository = context.getBean(PlatoRepository.class);
+        PedidoRepository pedidoRepository = context.getBean(PedidoRepository.class);
+        LineaPedidoRepository lineaPedidoRepository = context.getBean(LineaPedidoRepository.class);
 
         // crear un objeto restaurante: new
         Restaurante pacoBar = new Restaurante();
@@ -220,6 +220,21 @@ public class RestaurantApplication {
                 System.out.println(plato);
             }
 
+            Pedido pedido1 = new Pedido();
+            pedido1.setNumeroTabla(1);
+            pedido1.setNumeroPersonas(2);
+            pedido1.setRestaurante(restauranteEspañol);
+            pedido1.setPropina(2.33);
+            pedidoRepository.save(pedido1);
+
+            Pedido pedido2 = new Pedido(4, 2, 4.23, restauranteEspañol);
+            pedidoRepository.save(pedido2);
+
+            LineaPedido lineapedido1 = new LineaPedido(1, pedido1, plato1);
+            LineaPedido lineapedido2 = new LineaPedido(2, pedido1, plato2);
+            LineaPedido lineapedido3 = new LineaPedido(3, pedido1, plato3);
+
+            lineaPedidoRepository.saveAll(List.of(lineapedido1, lineapedido2, lineapedido3));
     }
 
 }

@@ -17,6 +17,9 @@ public class LineaPedido {
 
     private Integer cantidad;
 
+    public LineaPedido(Integer i, Pedido pedido1, Plato plato1) {
+    }
+
 
     public Long getId() {
         return id;
