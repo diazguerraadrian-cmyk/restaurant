@@ -23,6 +23,9 @@ public class LineaPedido {
         this.cantidad = cantidad;
     }
 
+    public LineaPedido() {
+    }
+
     public Long getId() {
         return id;
     }

@@ -241,6 +241,16 @@ public class RestaurantApplication {
                 double preciolinea = lineaPedido.getPlato().getPrecio() * lineaPedido.getCantidad();
                 precioTotal += preciolinea;
             }
+
+
+            pedido1.setPrecioTotal(precioTotal);
+            pedido1.setTipoPedido(TipoPedido.COMPLETED);
+            pedidoRepository.save(pedido1);
+
+           Double precioTotal2 = lineaPedidoRepository.calculatepreciototal(pedido1.getId());
+
+        System.out.println("Precio precioTotal: " + precioTotal);
+        System.out.println("Precio precioTotal2: " + precioTotal2);
     }
 
 }
