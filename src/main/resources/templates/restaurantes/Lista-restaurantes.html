@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado Restaurantes</title>
+</head>
+<body>
+
+<h1>Listado Restaurantes</h1>
+
+
+<ul>
+    <li th:each="Restaurante : ${restaurantes}">
+        <span th:text="${Restaurante.nombre}"></span>
+    </li>
+
+</ul>
+</body>
+</html>
