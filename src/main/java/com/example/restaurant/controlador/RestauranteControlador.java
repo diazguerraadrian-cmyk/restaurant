@@ -5,8 +5,10 @@ import com.example.restaurant.repository.RestauranteRepository;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class RestauranteControlador {
@@ -39,6 +41,21 @@ public class RestauranteControlador {
         model.addAttribute("numRestaurantes", 5);
         model.addAttribute("titulo", "Lista de restaurantes");
         return "restaurantes/Lista-restaurantes";
+    }
+
+    @GetMapping("Restaurantes/{id}")
+    public String detallesRestaurante(@PathVariable Long id, Model model){
+
+        Optional<Restaurante> restauranteOptional = restauranteRepository.findById(id);
+        if (restauranteOptional.isPresent()){
+
+            Restaurante restaurante = restauranteOptional.get();
+            model.addAttribute("restaurante", restaurante);
+            return "restaurantes/Detalles-restaurantes";
+
+        } else{
+            return "redirect:/restaurantes";
+        }
     }
 
 }

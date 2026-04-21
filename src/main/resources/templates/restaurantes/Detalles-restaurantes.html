@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Restaurante</title>
+</head>
+<body>
+
+<h1 th:text="${restaurante.nombre}"></h1>
+
+<p th:text="${restaurante.precioMedio != null ? restaurante.precioMedio + '€ (EUR)' : 'Sin precio'}"></p>
+
+
+<p th:if="${restaurante.numero_empleados != null}" th:text="${restaurante.numero_empleados + 'empleados'}"></p>
+<p th:unless="${restaurante.numero_empleados != null}">Sin empleados</p>
+
+<p th:if="${restaurante.activo}" style="color:green;">Abierto</p>
+<p th:unless="${restaurante.activo}" style="color:red;">Cerrado</p>
+<!-- resto de atributos de restaurante -->
+
+<!-- listado de platos -->
+
+</body>
+</html>
