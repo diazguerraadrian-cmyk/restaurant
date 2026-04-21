@@ -3,17 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>Listado Restaurantes</title>
+
+
 </head>
 <body>
 
 <h1>Listado Restaurantes</h1>
 
+<!-- Imprimir numero de restaurantes -->
+<p th:text="|${#lists.size(restaurantes)} resultados|"></p>
+<p th:text="|${restaurantes.size()} resultados|"></p>
+<p th:text="|${numRestaurantes} resultados|"></p>
 
+<!-- Imprimir lista con restaurantes -->
 <ul>
     <li th:each="Restaurante : ${restaurantes}">
         <span th:text="${Restaurante.nombre}"></span>
+
+        <span th:text="${Restaurante.precioMedio}"></span>
+        <!-- Agregar enlace que apunte al restaurante -->
     </li>
 
 </ul>
+
 </body>
+
 </html>
