@@ -16,6 +16,20 @@ public class RestauranteControlador {
     public RestauranteControlador(RestauranteRepository restauranteRepository) {
         this.restauranteRepository = restauranteRepository;
     }
+    /*
+    Resumen de métodos típicos en una clase controller:
+    @GetMapping("restaurantes") findAll
+    @GetMapping("restaurantes/{id}") findById
+
+    @GetMapping("restaurantes/create") createForm
+    @PostMapping("restaurantes") create
+
+    @GetMapping("restaurantes/{id}/edit") editForm
+    @PostMapping("restaurantes/{id}/edit") edit
+
+    @GetMapping("restaurantes/delete/{id}") delete
+
+     */
 
     @GetMapping("restaurantes")
     public String ListaRestaurantes(Model model) {
