@@ -1,6 +1,8 @@
 package com.example.restaurant.controlador;
 
+import com.example.restaurant.model.Plato;
 import com.example.restaurant.model.Restaurante;
+import com.example.restaurant.repository.PlatoRepository;
 import com.example.restaurant.repository.RestauranteRepository;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
@@ -14,10 +16,13 @@ import java.util.Optional;
 public class RestauranteControlador {
 
     private final RestauranteRepository restauranteRepository;
+    private final PlatoRepository platoRepository;
 
-    public RestauranteControlador(RestauranteRepository restauranteRepository) {
+    public RestauranteControlador(RestauranteRepository restauranteRepository, PlatoRepository platoRepository) {
         this.restauranteRepository = restauranteRepository;
+        this.platoRepository = platoRepository;
     }
+
     /*
     Resumen de métodos típicos en una clase controller:
     @GetMapping("restaurantes") findAll
@@ -51,6 +56,8 @@ public class RestauranteControlador {
 
             Restaurante restaurante = restauranteOptional.get();
             model.addAttribute("restaurante", restaurante);
+            List<Plato> platos = platoRepository.findByRestauranteIdOrderByPrecio(restaurante.getId());
+            model.addAttribute("platos", platos);
             return "restaurantes/Detalles-restaurantes";
 
         } else{

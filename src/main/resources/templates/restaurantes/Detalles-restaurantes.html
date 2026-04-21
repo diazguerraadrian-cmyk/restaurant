@@ -16,6 +16,8 @@
 
 <p th:if="${restaurante.activo}" style="color:green;">Abierto</p>
 <p th:unless="${restaurante.activo}" style="color:red;">Cerrado</p>
+
+<p th:text="${platos.size()} + ' platos'"></p>
 <!-- resto de atributos de restaurante -->
 
 <!-- listado de platos -->
