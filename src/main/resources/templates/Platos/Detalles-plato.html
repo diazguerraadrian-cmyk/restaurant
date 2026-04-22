@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalle Plato</title>
+</head>
+<body>
+
+<h1 th:text="'Plato' + ${plato.id}"></h1>
+
+<p th:text="'Nombre:' + ' ' + ${plato.nombre}"></p>
+
+<p th:text="${plato.precio != null ? plato.precio + '€ (EUR)' : 'Sin precio'}"></p>
+
+<p th:text="'Descripcion:' + ' ' + ${plato.descripcion != null ? plato.descripcion : 'Sin descripcion'}"></p>
+
+
+<!-- switch sobre enum tipo de plato TipoPlato -->
+<p th:switch="${plato.tipoPlato}">
+    <span th:case="${T(com.example.restaurant.model.TipoPlato).PRIMERO}">Primer plato</span>
+    <span th:case="${T(com.example.restaurant.model.TipoPlato).SEGUNDO}">Segundo plato</span>
+    <span th:case="${T(com.example.restaurant.model.TipoPlato).POSTRE}">Tercer plato</span>
+    <span th:case="*">No definido.</span>
+</p>
+
+<p th:if="${plato.restaurante != null}">
+    <!-- Este plato pertenece al restaurante -->
+    <a th:href="@{/restaurantes/{id}(id=${plato.restaurante.id})}" th:text="${plato.restaurante.nombre}"></a>
+</p>
+
+</body>
+</html>

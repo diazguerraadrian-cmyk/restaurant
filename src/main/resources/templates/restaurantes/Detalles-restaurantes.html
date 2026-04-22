@@ -40,6 +40,8 @@
             <td th:text="${plato.tipoPlato.label}"></td>
             <td>
                 <!-- Botones con acciones: Ver, Agregar a pedido, Desactivar, Borrar -->
+                <!-- Ver plato -->
+                <a th:href="@{/plato/{id}(id=${plato.id})}">Ver plato</a>
             </td>
         </tr>
     </tbody>
