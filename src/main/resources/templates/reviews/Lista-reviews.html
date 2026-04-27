@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado Reviews</title>
+
+
+</head>
+<body>
+
+<h1>Opiniones de clientes</h1>
+
+<ul>
+    <li th:each="review : ${reviews}">
+        <p th:text="${review.title}"></p>
+        <p th:text="${review.descripcion}"></p>
+        <p th:text="${'Valoración: ' + review.calificacion + ' /5 estrellas'}"></p>
+        <p th:text="${'Fecha: ' + review.calificacion}"></p>
+
+        <p th:text="${review.restaurante.nombre}"></p>
+        <p th:href="@{/restaurantes/{id}(id=${review.restaurant.id})}">Ver restaurante</p>
+    </li>
+</ul>
+
+</body>
+
+</html>
