@@ -23,6 +23,7 @@ public class RestaurantApplication {
         PlatoRepository platoRepository = context.getBean(PlatoRepository.class);
         PedidoRepository pedidoRepository = context.getBean(PedidoRepository.class);
         LineaPedidoRepository lineaPedidoRepository = context.getBean(LineaPedidoRepository.class);
+        ReviewRepository reviewRepository = context.getBean(ReviewRepository.class);
 
         // crear un objeto restaurante: new
         Restaurante pacoBar = new Restaurante();
@@ -251,6 +252,22 @@ public class RestaurantApplication {
 
         System.out.println("Precio precioTotal: " + precioTotal);
         System.out.println("Precio precioTotal2: " + precioTotal2);
+
+        Review review1 = Review.builder()
+                .Title("Excelente comida y servicio")
+                .descripcion("Muy buena atención al cliente")
+                .restaurante(restauranteEspañol)
+                .calificacion(7)
+                .build();
+
+        Review review2 = Review.builder()
+                .Title("Mala comida y servicio")
+                .descripcion("Muy mala atención al cliente")
+                .restaurante(restauranteEspañol)
+                .calificacion(2)
+                .build();
+
+        reviewRepository.saveAll(List.of(review1, review2));
     }
 
 }
