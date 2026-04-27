@@ -2,8 +2,11 @@ package com.example.restaurant.controlador;
 
 import com.example.restaurant.model.Plato;
 import com.example.restaurant.model.Restaurante;
+import com.example.restaurant.model.Review;
 import com.example.restaurant.repository.PlatoRepository;
 import com.example.restaurant.repository.RestauranteRepository;
+import com.example.restaurant.repository.ReviewRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,15 +16,17 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
+@AllArgsConstructor
 public class RestauranteControlador {
 
     private final RestauranteRepository restauranteRepository;
     private final PlatoRepository platoRepository;
+    private final ReviewRepository reviewRepository;
 
-    public RestauranteControlador(RestauranteRepository restauranteRepository, PlatoRepository platoRepository) {
-        this.restauranteRepository = restauranteRepository;
-        this.platoRepository = platoRepository;
-    }
+    //public RestauranteControlador(RestauranteRepository restauranteRepository, PlatoRepository platoRepository) {
+//        this.restauranteRepository = restauranteRepository;
+//        this.platoRepository = platoRepository;
+ //   }
 
     /*
     Resumen de métodos típicos en una clase controller:
@@ -58,6 +63,11 @@ public class RestauranteControlador {
             model.addAttribute("restaurante", restaurante);
             List<Plato> platos = platoRepository.findByRestauranteIdOrderByPrecio(restaurante.getId());
             model.addAttribute("platos", platos);
+
+            // reviews
+            List<Review> reviews = reviewRepository.findByRestaurante_IdOrderByFechacreadaDesc(restaurante.getId());
+            model.addAttribute("reviews", reviews);
+
             return "restaurantes/Detalles-restaurantes";
 
         } else{
