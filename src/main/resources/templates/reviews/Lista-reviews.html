@@ -17,8 +17,13 @@
         <p th:text="${'Valoración: ' + review.calificacion + ' /5 estrellas'}"></p>
         <p th:text="${'Fecha: ' + review.calificacion}"></p>
 
-        <p th:text="${review.restaurante.nombre}"></p>
-        <p th:href="@{/restaurantes/{id}(id=${review.restaurant.id})}">Ver restaurante</p>
+        <p th:if="${review.restaurante != null}" th:text="${review.restaurante.nombre}"></p>
+
+        <p th:if="${review.plato != null}" th:text="${review.plato.nombre}"></p>
+
+        <p th:if="${review.plato != null && review.plato.restaurante != null}" th:text="${review.plato.nombre}"></p>
+
+        <p th:href="@{/restaurantes/{id}(id=${review.restaurante.id})}">Ver restaurante</p>
     </li>
 </ul>
 
