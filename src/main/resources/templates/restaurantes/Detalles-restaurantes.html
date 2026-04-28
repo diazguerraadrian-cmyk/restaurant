@@ -1,66 +1,109 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Restaurante</title>
-</head>
-<body>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/head :: head('Detalle Restaurante')}"></head>
+<body class="d-flex flex-column min-vh-100">
 
-<h1 th:text="${restaurante.nombre}"></h1>
+<nav th:replace="~{layout/navbar :: navbar}"></nav>
 
-<p th:text="${restaurante.precioMedio != null ? restaurante.precioMedio + '€ (EUR)' : 'Sin precio'}"></p>
+<main class="container flex-grow-1">
 
+    <!-- Cabecera del restaurante -->
+    <div class="d-flex justify-content-between align-items-start mb-3">
+        <div>
+            <h1 class="mb-2" th:text="${restaurante.nombre}">Nombre</h1>
+            <span class="badge bg-success me-1">
+                <i class="fa-solid fa-euro-sign me-1"></i>
+                <span th:text="${restaurante.precioMedio != null ? restaurante.precioMedio + ' €' : 'Sin precio'}"></span>
+            </span>
+            <span class="badge bg-info text-dark me-1"
+                  th:if="${restaurante.numero_empleados != null}"
+                  th:text="${restaurante.numero_empleados + ' empleados'}"></span>
+            <span class="badge bg-secondary me-1"
+                  th:unless="${restaurante.numero_empleados != null}">Sin empleados</span>
+        </div>
 
-<p th:if="${restaurante.numero_empleados != null}" th:text="${restaurante.numero_empleados + 'empleados'}"></p>
-<p th:unless="${restaurante.numero_empleados != null}">Sin empleados</p>
+        <span th:if="${restaurante.activo}" class="badge bg-success fs-6">
+            <i class="fa-solid fa-door-open me-1"></i> Abierto
+        </span>
+        <span th:unless="${restaurante.activo}" class="badge bg-danger fs-6">
+            <i class="fa-solid fa-door-closed me-1"></i> Cerrado
+        </span>
+    </div>
 
-<p th:if="${restaurante.activo}" style="color:green;">Abierto</p>
-<p th:unless="${restaurante.activo}" style="color:red;">Cerrado</p>
+    <hr>
 
-<h2>Carta de platos</h2>
-<p th:text="${platos.size()} + ' platos'"></p>
+    <!-- Carta de platos -->
+    <h2 class="mt-4">
+        <i class="fa-solid fa-utensils text-primary me-2"></i> Carta de platos
+    </h2>
+    <p class="text-muted" th:text="${platos.size()} + ' platos'"></p>
 
-<table>
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Nombre</th>
-            <th>Descripción</th>
-            <th>Precio</th>
-            <th>Tipo</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr th:each="plato : ${platos}">
-            <td th:text="${plato.id}"></td>
-            <td th:text="${plato.nombre}"></td>
-            <td th:text="${plato.descripcion}"></td>
-            <td th:text="${plato.precio}"></td>
-            <td th:text="${plato.tipoPlato.label}"></td>
-            <td>
-                <!-- Botones con acciones: Ver, Agregar a pedido, Desactivar, Borrar -->
-                <!-- Ver plato -->
-                <a th:href="@{/plato/{id}(id=${plato.id})}">Ver plato</a>
-            </td>
-        </tr>
-    </tbody>
-</table>
-<!-- resto de atributos de restaurante -->
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+            <thead class="table-dark">
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Precio</th>
+                <th>Tipo</th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="plato : ${platos}">
+                <td th:text="${plato.id}"></td>
+                <td class="fw-semibold" th:text="${plato.nombre}"></td>
+                <td class="text-muted small" th:text="${plato.descripcion}"></td>
+                <td>
+                    <span class="badge bg-success" th:text="${plato.precio} + ' €'"></span>
+                </td>
+                <td>
+                    <span class="badge bg-light text-dark border" th:text="${plato.tipoPlato.label}"></span>
+                </td>
+                <td>
+                    <a th:href="@{/Platos/{id}(id=${plato.id})}"
+                       class="btn btn-sm btn-outline-primary">
+                        <i class="fa-regular fa-eye me-1"></i> Ver
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 
-<!-- listado de platos -->
-<h2>Opiniones de nuestros clientes</h2>
+    <!-- Opiniones -->
+    <h2 class="mt-5">
+        <i class="fa-regular fa-comments text-primary me-2"></i> Opiniones de nuestros clientes
+    </h2>
 
-<p th:if="${reviews.isEmpty()}">Nadie ha comentado todavía, sé el primero en escribir una opinión.</p>
+    <div th:if="${reviews.isEmpty()}" class="alert alert-light border">
+        <i class="fa-regular fa-face-smile me-1"></i>
+        Nadie ha comentado todavía, sé el primero en escribir una opinión.
+    </div>
 
-<ul th:unless="${reviews.isEmpty()}">
-    <li th:each="review : ${reviews}">
+    <div class="row row-cols-1 row-cols-md-2 g-3" th:unless="${reviews.isEmpty()}">
+        <div class="col" th:each="review : ${reviews}">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${review.title}">Título</h5>
+                    <p class="card-text" th:text="${review.descripcion}">Descripción</p>
+                    <span class="badge bg-warning text-dark">
+                        <i class="fa-solid fa-star me-1"></i>
+                        <span th:text="${review.calificacion + ' / 5'}"></span>
+                    </span>
+                </div>
+                <div class="card-footer text-muted small bg-transparent">
+                    <i class="fa-regular fa-calendar me-1"></i>
+                    <span th:text="${review.fechacreada}"></span>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <p th:text="${review.title}"></p>
-        <p th:text="${review.descripcion}"></p>
-        <p th:text="${'Valoración: ' + review.calificacion + ' /5 estrellas'}"></p>
-        <p th:text="${'Fecha: ' + review.fechacreada}"></p>
-    </li>
-</ul>
+</main>
+
+<footer th:replace="~{layout/footer :: footer}"></footer>
+<script th:replace="~{layout/footer :: scripts}"></script>
 </body>
 </html>
