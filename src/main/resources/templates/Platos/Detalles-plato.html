@@ -27,6 +27,19 @@
     <!-- Este plato pertenece al restaurante -->
     <a th:href="@{/restaurantes/{id}(id=${plato.restaurante.id})}" th:text="${plato.restaurante.nombre}"></a>
 </p>
+<h2>Opiniones sobre este plato</h2>
+
+<p th:if="${reviews.isEmpty()}">Nadie ha comentado todavía, sé el primero en escribir una opinión.</p>
+
+<ul th:unless="${reviews.isEmpty()}">
+    <li th:each="review : ${reviews}">
+
+        <p th:text="${review.title}"></p>
+        <p th:text="${review.descripcion}"></p>
+        <p th:text="${'Valoración: ' + review.calificacion + ' /5 estrellas'}"></p>
+        <p th:text="${'Fecha: ' + review.fechacreada}"></p>
+    </li>
+</ul>
 
 </body>
 </html>

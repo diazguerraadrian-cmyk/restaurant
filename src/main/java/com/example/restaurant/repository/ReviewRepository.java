@@ -11,4 +11,5 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     List<Review> findByCalificacionGreaterThanEqualAndRestaurante_IdOrderByFechacreadaDesc(Integer calificacion, Long id);
 
+    List<Review> findByPlato_IdOrderByFechacreadaDesc(Long id);
 }

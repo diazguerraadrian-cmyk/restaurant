@@ -268,6 +268,21 @@ public class RestaurantApplication {
                 .build();
 
         reviewRepository.saveAll(List.of(review1, review2));
+
+        Review review3 = Review.builder()
+                .Title("No tan asqueroso, pero fatal")
+                .descripcion("Muy mala atención al cliente")
+                .plato(plato2)
+                .calificacion(2)
+                .build();
+
+        Review review4 = Review.builder()
+                .Title("Asqueroso")
+                .descripcion("Muy mala atención al cliente")
+                .plato(plato1)
+                .calificacion(0)
+                .build();
+
     }
 
 }

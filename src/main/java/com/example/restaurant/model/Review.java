@@ -22,6 +22,10 @@ public class Review {
     private Integer calificacion;
     @Builder.Default
     private LocalDateTime fechacreada = LocalDateTime.now();
+    @ToString.Exclude
     @ManyToOne
     private Restaurante restaurante;
+    @ToString.Exclude
+    @ManyToOne
+    private Plato plato;
 }
