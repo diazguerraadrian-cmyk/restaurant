@@ -50,6 +50,7 @@ public class RestauranteControlador {
         model.addAttribute("restaurantes", restauranteRepository.findAll());
         model.addAttribute("numRestaurantes", 5);
         model.addAttribute("titulo", "Lista de restaurantes");
+        model.addAttribute("precioMedio","precioMedio");
         return "restaurantes/Lista-restaurantes";
     }
 

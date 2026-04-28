@@ -14,8 +14,8 @@ import java.time.LocalDateTime;
 @Table
 public class Review {
     @Id
-    private Long id;
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String Title;
     @Column(length = 1000)
     private String descripcion;
