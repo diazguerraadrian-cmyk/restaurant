@@ -38,7 +38,7 @@
                         <a th:href="@{/Restaurantes/{id}(id=${review.restaurante.id})}"
                            th:text="${review.restaurante.nombre}">Restaurante</a>
                     </div>
-                    <div th:if="${review.dish != null}">
+                    <div th:if="${review.plato != null}">
                         <i class="fa-solid fa-utensils text-primary me-1"></i>
                         <a th:href="@{/Platos/{id}(id=${review.plato.id})}"
                            th:text="${review.plato.nombre}">Plato</a>
