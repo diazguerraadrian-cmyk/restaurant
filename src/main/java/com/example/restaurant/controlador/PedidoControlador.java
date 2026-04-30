@@ -26,7 +26,7 @@ public class PedidoControlador {
     @GetMapping("pedidos/{id}")
     public String order(Model model, @PathVariable Long id){
         model.addAttribute("pedido", pedidoRepository.findById(id).orElseThrow());
-        model.addAttribute("lineaPedido", lineaPedidoRepository.findByOrder_Id(id));
+        model.addAttribute("lineaPedido", lineaPedidoRepository.findByPedido_Id(id));
         return "pedidos/detalles-pedido";
     }
 }

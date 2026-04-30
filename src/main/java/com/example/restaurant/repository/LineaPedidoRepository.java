@@ -5,6 +5,8 @@ import org.jspecify.annotations.Nullable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
+
 public interface LineaPedidoRepository extends JpaRepository<LineaPedido, Long> {
     /*@Query("""
         SELECT SUM(lp.cantidad * p.popina)
@@ -18,5 +20,5 @@ public interface LineaPedidoRepository extends JpaRepository<LineaPedido, Long> 
     """)
     Double calculatepreciototal(Long id);
 
-    @Nullable Object findByOrder_Id(Long id);
+    List<LineaPedido> findByPedido_Id(Long id);
 }

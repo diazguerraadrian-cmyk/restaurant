@@ -49,6 +49,15 @@
                                th:text="${review.plato.restaurante.nombre}">Restaurante</a>
                         </span>
                     </div>
+                    <div>
+                        <a class="btn btn-danger" th:href="@{/reviews/{id}(id=${review.id})}">Ver</a>
+                        <a class="btn btn-danger" th:href="@{/reviews/edit/{id}(id=${review.id})}">
+                            <i class="fa-solid fa-pencil"></i> Editar
+                        </a>
+                        <a class="btn btn-danger" th:href="@{/reviews/delete/{id}(id=${review.id})}">
+                            <i class="fa-solid fa-trash mr-2"></i> Borrar
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
