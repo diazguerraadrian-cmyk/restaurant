@@ -14,6 +14,10 @@
     <div th:if="${reviews.isEmpty()}" class="alert alert-light border">
         Aún no hay reseñas.
     </div>
+    <div th:if="${mensaje}" class="alert alert-success fade show alert-dismissible" role="alert">
+        <i class="fa-solid fa-check-circle"></i>
+        <span th:text="${mensaje}"></span>
+    </div>
 
     <div class="row row-cols-1 row-cols-md-2 g-3">
         <div class="col" th:each="review : ${reviews}">
