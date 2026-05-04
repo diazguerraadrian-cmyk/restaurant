@@ -11,6 +11,9 @@
         <span class="badge bg-secondary fs-6" th:text="|${numRestaurantes} resultados|">0 resultados</span>
     </div>
 
+    <a th:href="@{/restaurantes(tipoComida='SPANISH')}" class="btn btn-sm btn-secondary">Comida española</a>
+    <a th:href="@{/restaurantes(tipoComida='JAPANESE')}" class="btn btn-sm btn-secondary">Comida japonesa</a>
+
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
         <div class="col" th:each="restaurant : ${restaurantes}">
             <div class="card card-restaurant h-100 shadow-sm">

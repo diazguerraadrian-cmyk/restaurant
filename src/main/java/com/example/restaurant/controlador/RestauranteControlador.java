@@ -3,6 +3,7 @@ package com.example.restaurant.controlador;
 import com.example.restaurant.model.Plato;
 import com.example.restaurant.model.Restaurante;
 import com.example.restaurant.model.Review;
+import com.example.restaurant.model.TipoComida;
 import com.example.restaurant.repository.PlatoRepository;
 import com.example.restaurant.repository.RestauranteRepository;
 import com.example.restaurant.repository.ReviewRepository;
@@ -11,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -26,10 +28,13 @@ public class RestauranteControlador {
 
 
     @GetMapping("restaurantes")
-    public String ListaRestaurantes(Model model) {
+    public String ListaRestaurantes(
+            Model model,
+            @RequestParam(required = false) TipoComida tipoComida
+            ){
 
         // List<Restaurante> restaurantes = restauranteRepository.findAll();
-        List<Restaurante> restaurantes = restauranteRepository.findByActiveTrue();
+        List<Restaurante> restaurantes = restauranteRepository.findActiveFiltering(tipoComida);
         model.addAttribute("restaurantes", restauranteRepository.findAll());
         model.addAttribute("numRestaurantes", 5);
         model.addAttribute("titulo", "Lista de restaurantes");

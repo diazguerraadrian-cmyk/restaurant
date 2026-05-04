@@ -1,7 +1,10 @@
 package com.example.restaurant.repository;
 
 import com.example.restaurant.model.Restaurante;
+import com.example.restaurant.model.TipoComida;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -9,4 +12,10 @@ import java.util.Optional;
 public interface RestauranteRepository extends JpaRepository<Restaurante, Long> {
     List<Restaurante> findByActiveTrue();
     Optional<Restaurante> findByIdAndActiveTrue(Long id);
+    @Query("""
+    SELECT r from Restaurante r
+    WHERE r.activo = true
+    AND (:tipoComida IS NULL OR r.tipoComida = :tipoComida)
+    """)
+    List<Restaurante> findActiveFiltering(@Param("tipoComida")TipoComida tipoComida);
 }
