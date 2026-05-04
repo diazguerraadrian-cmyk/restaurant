@@ -10,7 +10,12 @@
     <!-- Cabecera del restaurante -->
     <div class="d-flex justify-content-between align-items-start mb-3">
         <div>
-            <h1 class="mb-2" th:text="${restaurante.nombre}">Nombre</h1>
+            <h1 class="mb-2" th:text="${restaurante.nombre}">Nombre
+                <a th:href="@{/Restaurantes/desactivar/{id}(id=${restaurant.id})}"
+                   class="btn btn-outline-primary btn-sm w-100">
+                    <i class="fa-regular fa-ban me-1"></i> Desactivar restaurante
+                </a>
+            </h1>
             <span class="badge bg-success me-1">
                 <i class="fa-solid fa-euro-sign me-1"></i>
                 <span th:text="${restaurante.precioMedio != null ? restaurante.precioMedio + ' €' : 'Sin precio'}"></span>

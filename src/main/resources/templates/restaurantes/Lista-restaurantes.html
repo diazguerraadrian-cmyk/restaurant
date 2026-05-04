@@ -31,6 +31,10 @@
                        class="btn btn-outline-primary btn-sm w-100">
                         <i class="fa-regular fa-eye me-1"></i> Ver restaurante
                     </a>
+                    <a th:href="@{/Restaurantes/desactivar/{id}(id=${restaurant.id})}"
+                       class="btn btn-outline-primary btn-sm w-100">
+                        <i class="fa-regular fa-ban me-1"></i> Desactivar restaurante
+                    </a>
                 </div>
             </div>
         </div>

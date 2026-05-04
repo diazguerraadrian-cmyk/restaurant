@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,30 +24,12 @@ public class RestauranteControlador {
     private final PlatoRepository platoRepository;
     private final ReviewRepository reviewRepository;
 
-    //public RestauranteControlador(RestauranteRepository restauranteRepository, PlatoRepository platoRepository) {
-//        this.restauranteRepository = restauranteRepository;
-//        this.platoRepository = platoRepository;
- //   }
-
-    /*
-    Resumen de métodos típicos en una clase controller:
-    @GetMapping("restaurantes") findAll
-    @GetMapping("restaurantes/{id}") findById
-
-    @GetMapping("restaurantes/create") createForm
-    @PostMapping("restaurantes") create
-
-    @GetMapping("restaurantes/{id}/edit") editForm
-    @PostMapping("restaurantes/{id}/edit") edit
-
-    @GetMapping("restaurantes/delete/{id}") delete
-
-     */
 
     @GetMapping("restaurantes")
     public String ListaRestaurantes(Model model) {
 
-        List<Restaurante> restaurantes = restauranteRepository.findAll();
+        // List<Restaurante> restaurantes = restauranteRepository.findAll();
+        List<Restaurante> restaurantes = restauranteRepository.findByActiveTrue();
         model.addAttribute("restaurantes", restauranteRepository.findAll());
         model.addAttribute("numRestaurantes", 5);
         model.addAttribute("titulo", "Lista de restaurantes");
@@ -76,4 +59,17 @@ public class RestauranteControlador {
         }
     }
 
+    @GetMapping("Restaurantes/desactivar/{id}")
+    public String restauranteDesactivar(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes){
+        Optional<Restaurante> restauranteOptional = restauranteRepository.findByIdAndActiveTrue(id);
+        if (restauranteOptional.isPresent()){
+            Restaurante restaurante = restauranteOptional.get();
+            restaurante.setActivo(false);
+            restauranteRepository.save(restaurante);
+            redirectAttributes.addFlashAttribute("mensaje", "Restaurante desactivado correctamente");
+            return "redirect:/restaurantes";
+        } else {
+            return "redirect:/restaurantes";
+        }
+    }
 }
