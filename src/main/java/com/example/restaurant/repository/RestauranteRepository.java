@@ -16,6 +16,7 @@ public interface RestauranteRepository extends JpaRepository<Restaurante, Long> 
     SELECT r from Restaurante r
     WHERE r.activo = true
     AND (:tipoComida IS NULL OR r.tipoComida = :tipoComida)
+    AND (:precio IS NULL OR r.precioMedio <= :precio)
     """)
-    List<Restaurante> findActiveFiltering(@Param("tipoComida")TipoComida tipoComida);
+    List<Restaurante> findActiveFiltering(@Param("tipoComida")TipoComida tipoComida, @Param("precio") Double precio);
 }

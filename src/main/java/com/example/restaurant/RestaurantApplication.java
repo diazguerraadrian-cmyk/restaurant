@@ -121,11 +121,13 @@ public class RestaurantApplication {
         // crear un restaurante español
         Restaurante restauranteEspañol = new Restaurante();
         restauranteEspañol.setTipoComida(TipoComida.SPANISH);
+        restauranteEspañol.setPrecioMedio(4d);
         restauranteRepository.save(restauranteEspañol);
         System.out.println(restauranteEspañol);
         // crear un restaurante de comida japonesa
         Restaurante restauranteJapones = new Restaurante();
         restauranteJapones.setTipoComida(TipoComida.JAPANESE);
+        restauranteJapones.setPrecioMedio(16d);
         restauranteRepository.save(restauranteJapones);
         System.out.println(restauranteJapones);
         // probar fecha de startDate del restaurante
