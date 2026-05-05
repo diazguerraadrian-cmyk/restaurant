@@ -68,7 +68,7 @@ public class RestauranteControlador {
 
     @GetMapping("Restaurantes/desactivar/{id}")
     public String restauranteDesactivar(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes){
-        Optional<Restaurante> restauranteOptional = restauranteRepository.findByIdAndActiveTrue(id);
+        Optional<Restaurante> restauranteOptional = restauranteRepository.findByIdAndActivoTrue(id);
         if (restauranteOptional.isPresent()){
             Restaurante restaurante = restauranteOptional.get();
             restaurante.setActivo(false);

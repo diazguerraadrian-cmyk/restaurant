@@ -27,7 +27,21 @@
         <form th:action="@{/restaurantes}" method="get" class="row align-items-end">
             <div class="col-auto">
                 <label class="form-label">Título</label>
-                <input type="text" name="titulo" class="form-control" placeholder="Busca por titulo..." th:value="${param}">
+                <input type="text" name="titulo" class="form-control" placeholder="Busca por titulo..." th:value="${param.titulo}">
+            </div>
+
+            <div class="col-auto">
+                <label class="form-label form-label-sm">Precio máx.</label>
+                <input type="number" min="10" step="1" name="precio" class="form-control form-control-sm" th:value="${param.precio}">
+            </div>
+
+            <div class="col-auto">
+                <label class="form-label form-label-sm">Tipo comida</label>
+                <select name="tipoComida" class="form-select form-select-sm">
+                    <option value="" th:selected="${param.tipoComida == null}">Todas</option>
+                    <option value="SPANISH" th:selected="${param.tipoComida != null and param.tipoComida[0] == 'SPANISH'}">Española</option>
+                    <option value="JAPANESE" th:selected="${param.tipoComida != null and param.tipoComida[0] == 'JAPANESE'}">Japonesa</option>
+                </select>
             </div>
 
             <div class="col-auto">

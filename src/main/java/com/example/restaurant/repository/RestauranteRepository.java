@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface RestauranteRepository extends JpaRepository<Restaurante, Long> {
-    List<Restaurante> findByActiveTrue();
-    Optional<Restaurante> findByIdAndActiveTrue(Long id);
+    List<Restaurante> findByActivoTrue();
+    Optional<Restaurante> findByIdAndActivoTrue(Long id);
     @Query("""
     SELECT r from Restaurante r
     WHERE r.activo = true
