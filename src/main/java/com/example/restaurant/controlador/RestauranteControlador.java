@@ -78,5 +78,12 @@ public class RestauranteControlador {
         } else {
             return "redirect:/restaurantes";
         }
+
+    }
+
+    @GetMapping("restaurantes/new")
+    public String nuevoRestaurante(Model model){
+        return "restaurantes/form-restaurantes";
+
     }
 }
