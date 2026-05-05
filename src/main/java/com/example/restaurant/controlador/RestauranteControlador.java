@@ -31,11 +31,12 @@ public class RestauranteControlador {
     public String ListaRestaurantes(
             Model model,
             @RequestParam(required = false) TipoComida tipoComida,
-            @RequestParam(required = false) Double precio
+            @RequestParam(required = false) Double precio,
+            @RequestParam(required = false) String titulo
             ){
 
         // List<Restaurante> restaurantes = restauranteRepository.findAll();
-        List<Restaurante> restaurantes = restauranteRepository.findActiveFiltering(tipoComida, precio);
+        List<Restaurante> restaurantes = restauranteRepository.findActiveFiltering(tipoComida, precio, titulo);
         model.addAttribute("restaurantes", restauranteRepository.findAll());
         model.addAttribute("numRestaurantes", 5);
         model.addAttribute("titulo", "Lista de restaurantes");
