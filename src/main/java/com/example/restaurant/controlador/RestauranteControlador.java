@@ -10,9 +10,7 @@ import com.example.restaurant.repository.ReviewRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -86,5 +84,12 @@ public class RestauranteControlador {
         model.addAttribute("restaurante", new Restaurante());
         return "restaurantes/form-restaurantes";
 
+    }
+
+    @PostMapping("restaurantes")
+    public String crearRestaurante(@ModelAttribute Restaurante restaurante) {
+        System.out.println("RESTAURANTE RECIBIDO: " + restaurante);
+        restauranteRepository.save(restaurante);
+        return "redirect:/restaurantes/" + restaurante.getId();
     }
 }
