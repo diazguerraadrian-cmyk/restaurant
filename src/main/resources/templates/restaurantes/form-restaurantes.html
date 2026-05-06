@@ -23,6 +23,16 @@
             <input type="text" class="form-control" id="nombre" th:field="*{nombre}">
         </div>
 
+        <div class="mb-3">
+            <label for="precioMedio" class="form-label">Precio medio</label>
+            <input type="number" class="form-control" id="precioMedio" th:field="*{precioMedio}" step="0.01" min="0">
+        </div>
+
+        <div class="mb-3 form-check form-switch">
+            <input type="checkbox" class="form-check-input" id="activo" role="switch" th:field="*{activo}">
+            <label for="activo" class="form-check-label">Restaurante activo</label>
+        </div>
+
         <button type="submit" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i>Guardar</button>
 
         <a th:href="@{/restaurantes}" class="btn btn-secondary">Cancelar</a>
