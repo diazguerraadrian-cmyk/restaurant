@@ -82,6 +82,7 @@ public class RestauranteControlador {
     @GetMapping("restaurantes/new")
     public String nuevoRestaurante(Model model){
         model.addAttribute("restaurante", new Restaurante());
+        model.addAttribute("tipoComida", TipoComida.values());
         return "restaurantes/form-restaurantes";
 
     }
