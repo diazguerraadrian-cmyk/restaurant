@@ -83,6 +83,7 @@ public class RestauranteControlador {
 
     @GetMapping("restaurantes/new")
     public String nuevoRestaurante(Model model){
+        model.addAttribute("restaurante", new Restaurante());
         return "restaurantes/form-restaurantes";
 
     }
