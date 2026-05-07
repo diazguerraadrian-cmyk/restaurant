@@ -63,6 +63,6 @@ public class PlatoControlador {
     @PostMapping("platos")
     public String guardarPlato(@ModelAttribute Plato plato) {
         platoRepository.save(plato);
-        return "redirect:/platos";
+        return "redirect:/Platos";
     }
 }
