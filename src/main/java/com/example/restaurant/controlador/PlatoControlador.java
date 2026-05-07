@@ -54,7 +54,7 @@ public class PlatoControlador {
         model.addAttribute("plato", new Plato());
         model.addAttribute("tipoPlatos", TipoPlato.values());
         model.addAttribute("restaurantes", restauranteRepository.findAll());
-        return "Platos/form-platos";
+        return "platos/form-platos";
     }
 
 
@@ -63,6 +63,6 @@ public class PlatoControlador {
     @PostMapping("platos")
     public String guardarPlato(@ModelAttribute Plato plato) {
         platoRepository.save(plato);
-        return "redirect:/Platos";
+        return "redirect:/platos";
     }
 }

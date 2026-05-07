@@ -22,36 +22,38 @@
         <i class="fa-regular fa-folder-open fa-2x mb-2 d-block text-muted"></i>
         <p class="mb-0 text-muted">Todavía no hay platos registrados</p>
     </div>
-
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <a th:href="@{platos/new}" class="btn btn-primary btn-sm mb-2"><i class="fa-solid fa-plus"></i>Crear plato</a>
+    </div>
     <!-- Grid de platos -->
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3"
          th:unless="${#lists.isEmpty(platos)}">
         <div class="col" th:each="plato : ${platos}">
             <div class="card h-100 shadow-sm border-0">
                 <div class="card-header bg-white d-flex justify-content-between align-items-center">
-                            <span th:switch="${dish.dishType}">
-                                <span class="badge bg-success" th:case="${T(com.restaurantes.model.enums.DishType).STARTER}">
+                            <span th:switch="${plato.tipoPlato}">
+                                <span class="badge bg-success" th:case="${T(com.example.restaurant.model.TipoPlato).PRIMERO}">
                                     <i class="fa-solid fa-leaf me-1"></i>Entrantes
                                 </span>
-                                <span class="badge bg-primary" th:case="${T(com.restaurantes.model.enums.DishType).MAIN}">
+                                <span class="badge bg-primary" th:case="${T(com.example.restaurant.model.TipoPlato).SEGUNDO}">
                                     <i class="fa-solid fa-drumstick-bite me-1"></i>Principales
                                 </span>
-                                <span class="badge bg-warning text-dark" th:case="${T(com.restaurantes.model.enums.DishType).DESSERT}">
+                                <span class="badge bg-warning text-dark" th:case="${T(com.example.restaurant.model.TipoPlato).POSTRE}">
                                     <i class="fa-solid fa-ice-cream me-1"></i>Postres
                                 </span>
                                 <span class="badge bg-secondary" th:case="*">Sin tipo</span>
                             </span>
                     <span class="fw-bold text-success">
-                                <span th:if="${dish.price != null}"
-                                      th:text="|${#numbers.formatDecimal(plato.price, 1, 2)} €|">0,00 €</span>
-                                <span th:unless="${plato.price != null}" class="text-muted small">Sin precio</span>
+                                <span th:if="${plato.precio != null}"
+                                      th:text="|${#numbers.formatDecimal(plato.precio, 1, 2)} €|">0,00 €</span>
+                                <span th:unless="${plato.precio != null}" class="text-muted small">Sin precio</span>
                             </span>
                 </div>
 
                 <div class="card-body">
                     <h5 class="card-title mb-2" th:text="${plato.nombre}">Nombre</h5>
                     <p class="card-text text-muted small mb-0"
-                       th:text="${plato.description != null ? plato.description : 'Sin descripción'}">
+                       th:text="${plato.descripcion != null ? plato.descripcion : 'Sin descripción'}">
                         Descripción
                     </p>
                 </div>
@@ -63,7 +65,7 @@
                            class="text-decoration-none text-muted"
                            th:text="${plato.restaurante.nombre}">Restaurante</a>
                     </small>
-                    <a th:href="@{/dishes/{id}(id=${dish.id})}"
+                    <a th:href="@{/plato/{id}(id=${plato.id})}"
                        class="btn btn-sm btn-outline-primary flex-shrink-0">
                         <i class="fa-regular fa-eye me-1"></i>Ver
                     </a>

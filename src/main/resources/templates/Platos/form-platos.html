@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/head :: head('Formulario Restaurante')}"></head>
+<body class="d-flex flex-column min-vh-100 bg-light">
+<nav th:replace="~{layout/navbar :: navbar}"></nav>
+<main class="container flex-grow-1 my-4">
+    <h1 class="mb-0">
+        <i class="fa-solid fa-utensils text-primary me-2"></i>Formulario restaurante
+    </h1>
+    <form th:action="@{/platos}" method="post" th:object="${plato}">
+        <input type="hidden" th:field="*{id}">
+
+        <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="nombre" th:field="*{nombre}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="descripción" class="form-label">Nombre</label>
+            <textarea class="form-control" id="descripción" th:field="*{descripción}" rows="3" maxlength="500" required></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="precio" class="form-label">Precio en euros</label>
+            <input type="number" class="form-control" id="precio" th:field="*{precio}" step="0.01" min="0" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="tipoPlato" class="form-label">Tipo de comida</label>
+            <select class="form-select" id="tipoPlato" th:field="*{tipoPlato}">
+                <option value="" th:selected="${restaurante.tipoComida == null}">Sin tipo de comida</option>
+                <option th:each="tipoPlato : ${tipoPlato}" th:value="${tipoPlato}" th:text="${tipoPlato.label}">Primero</option>
+                <option th:each="tipoPlato : ${tipoPlato}" th:value="${tipoPlato}" th:text="${tipoPlato.label}">Segundo</option>
+                <option th:each="tipoPlato : ${tipoPlato}" th:value="${tipoPlato}" th:text="${tipoPlato.label}">Postre</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="restaurante" class="form-label">Tipo de comida</label>
+            <select class="form-select" id="restaurante" th:field="*{restaurante}">
+                <option value=""></option>
+                <option th:each="restaurant : ${restaurants}" th:value="${restaurant.id}" th:text="${restaurant.id + ' - ' + restaurant.name}">Española</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-success">
+            <i class="fa-solid fa-floppy-disk"></i> Guardar
+        </button>
+        <a th:href="@{/Platos}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</main>
+<footer th:replace="~{layout/footer :: footer}"></footer>
+<script th:replace="~{layout/footer :: scripts}"></script>
+
+</body>
+</html>
