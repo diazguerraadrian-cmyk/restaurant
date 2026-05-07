@@ -69,6 +69,10 @@
                        class="btn btn-sm btn-outline-primary flex-shrink-0">
                         <i class="fa-regular fa-eye me-1"></i>Ver
                     </a>
+                    <a th:href="@{/platos/editar/{id}(id=${restaurant.id})}"
+                       class="btn btn-success btn-sm mt-2">
+                        <i class="fa-solid fa-pencil me-1"></i> Editar plato
+                    </a>
                 </div>
             </div>
         </div>

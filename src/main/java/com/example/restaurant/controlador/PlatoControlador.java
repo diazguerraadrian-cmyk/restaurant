@@ -2,6 +2,7 @@ package com.example.restaurant.controlador;
 
 import com.example.restaurant.model.Plato;
 import com.example.restaurant.model.Review;
+import com.example.restaurant.model.TipoComida;
 import com.example.restaurant.model.TipoPlato;
 import com.example.restaurant.repository.PlatoRepository;
 import com.example.restaurant.repository.RestauranteRepository;
@@ -57,7 +58,13 @@ public class PlatoControlador {
         return "platos/form-platos";
     }
 
-
+    @GetMapping("platos/edit/{id}")
+    public String editarPlato(@PathVariable Long id, Model model) {
+        model.addAttribute("plato", platoRepository.findById(id).orElseThrow());
+        model.addAttribute("tipoPlatos", TipoPlato.values());
+        model.addAttribute("restaurantes", restauranteRepository.findAll());
+        return "platos/form-platos";
+    }
 
 
     @PostMapping("platos")
