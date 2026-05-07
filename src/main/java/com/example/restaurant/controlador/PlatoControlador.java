@@ -2,13 +2,17 @@ package com.example.restaurant.controlador;
 
 import com.example.restaurant.model.Plato;
 import com.example.restaurant.model.Review;
+import com.example.restaurant.model.TipoPlato;
 import com.example.restaurant.repository.PlatoRepository;
+import com.example.restaurant.repository.RestauranteRepository;
 import com.example.restaurant.repository.ReviewRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,6 +23,15 @@ public class PlatoControlador {
 
     private final PlatoRepository platoRepository;
     private final ReviewRepository reviewRepository;
+    private final RestauranteRepository restauranteRepository;
+
+
+    @GetMapping("platos")
+    public String listaPlatos(Model model) {
+        List<Plato> platos = platoRepository.findAll();
+        model.addAttribute("platos", platos);
+        return "Platos/lista-platos";
+    }
 
 
     @GetMapping("plato/{id}")
@@ -35,5 +48,21 @@ public class PlatoControlador {
         }
 
         return "redirect:/restaurantes";
+    }
+    @GetMapping("platos/new")
+    public String nuevoPlato(Model model) {
+        model.addAttribute("plato", new Plato());
+        model.addAttribute("tipoPlatos", TipoPlato.values());
+        model.addAttribute("restaurantes", restauranteRepository.findAll());
+        return "Platos/form-platos";
+    }
+
+
+
+
+    @PostMapping("platos")
+    public String guardarPlato(@ModelAttribute Plato plato) {
+        platoRepository.save(plato);
+        return "redirect:/platos";
     }
 }
