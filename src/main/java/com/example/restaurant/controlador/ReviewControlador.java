@@ -8,9 +8,7 @@ import com.example.restaurant.repository.ReviewRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -51,5 +49,19 @@ public class ReviewControlador {
             review.setPlato(platoRepository.findById(platoId).orElseThrow());
         model.addAttribute("review", review);
         return "reviews/form-review";
+    }
+    @GetMapping("reviews/edit/{id}")
+    public String editarReview(Model model, @PathVariable Long id) {
+        model.addAttribute("review", reviewRepository.findById(id).orElseThrow());
+        return "reviews/form-review";
+    }
+    @PostMapping("reviews")
+    public String guardarReview(@ModelAttribute Review review){
+        reviewRepository.save(review);
+        if (review.getRestaurante() != null)
+            return "redirect:/Restaurantes/" + review.getRestaurante().getId();
+        if (review.getPlato() != null)
+            return "redirect:/platos/" + review.getPlato().getId();
+        return "redirect:/reviews";
     }
 }
