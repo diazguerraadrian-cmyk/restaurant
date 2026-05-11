@@ -13,7 +13,36 @@
         <i class="fa-solid fa-utensils text-primary me-2"></i>Formulario review
     </h1>
 
+    <form th:action="@{reviews}" method="post" th:object="${reviews}">
+        <input type="hidden" th:field="*{id}">
+        <input type="hidden" th:field="*{restaurante}">
+        <input type="hidden" th:field="*{plato}">
+    </form>
+
+    <div class="alert alert-info mt-3" th:if="${reviews.restaurante != null}">
+        <i class="fa-solid fa-store text-primary me-1"></i>
+        Reseña sobre el restaurante:
+        <span th:text="${reviews.restaurante.nombre}">Restaurante</span>
+
+    </div>
+
+    <div class="mb-3">
+        <label for="title" class="form-select">Titulo</label>
+        <input id="title" type="text" class="form-control" th:field="*{title}" required maxlength="255">
+    </div>
+
+    <div class="mb-3">
+        <label for="descripcion" class="form-select">Descripcion</label>
+        <textarea id="descripcion" type="text" class="form-control" rows="4" th:field="*{descripcion}" required maxlength="1000"></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label for="calificacion" class="form-select">Puntuacion (de 1 a 5)</label>
+        <input id="calificacion" type="number" class="form-control" th:field="*{calificacion}" required min="1" max="5">
+    </div>
+
     <footer th:replace="~{layout/footer :: footer}"></footer>
     <script th:replace="~{layout/footer :: scripts}"></script>
+</main>
 </body>
 </html>
