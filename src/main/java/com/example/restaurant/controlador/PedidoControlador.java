@@ -1,10 +1,12 @@
 package com.example.restaurant.controlador;
 
 import com.example.restaurant.model.Pedido;
+import com.example.restaurant.model.Plato;
 import com.example.restaurant.model.Restaurante;
 import com.example.restaurant.model.TipoPedido;
 import com.example.restaurant.repository.LineaPedidoRepository;
 import com.example.restaurant.repository.PedidoRepository;
+import com.example.restaurant.repository.PlatoRepository;
 import com.example.restaurant.repository.RestauranteRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -12,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Controller
 @AllArgsConstructor
@@ -19,6 +22,7 @@ public class PedidoControlador {
     private final PedidoRepository pedidoRepository;
     private final LineaPedidoRepository lineaPedidoRepository;
     private final RestauranteRepository restauranteRepository;
+    private final PlatoRepository platoRepository;
 
     // @GetMapping orders
     // filtrar por restaurante, filtrar por usuario
@@ -31,8 +35,11 @@ public class PedidoControlador {
     // @GetMapping orders/{id}
     @GetMapping("pedidos/{id}")
     public String order(Model model, @PathVariable Long id){
+        Pedido pedido = pedidoRepository.findById(id).orElseThrow();
         model.addAttribute("pedido", pedidoRepository.findById(id).orElseThrow());
         model.addAttribute("lineaPedido", lineaPedidoRepository.findByPedido_Id(id));
+        List<Plato> platos = platoRepository.findByRestauranteIdOrderByPrecio(pedido.getRestaurante().getId());
+        model.addAttribute("platos", platos);
         return "pedidos/detalles-pedido";
     }
     @GetMapping("pedidos/new")
