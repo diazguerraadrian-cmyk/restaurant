@@ -1,18 +1,23 @@
 package com.example.restaurant.controlador;
 
+import com.example.restaurant.model.Pedido;
+import com.example.restaurant.model.Restaurante;
 import com.example.restaurant.repository.LineaPedidoRepository;
 import com.example.restaurant.repository.PedidoRepository;
+import com.example.restaurant.repository.RestauranteRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @AllArgsConstructor
 public class PedidoControlador {
     private final PedidoRepository pedidoRepository;
     private final LineaPedidoRepository lineaPedidoRepository;
+    private final RestauranteRepository restauranteRepository;
 
     // @GetMapping orders
     // filtrar por restaurante, filtrar por usuario
@@ -28,5 +33,13 @@ public class PedidoControlador {
         model.addAttribute("pedido", pedidoRepository.findById(id).orElseThrow());
         model.addAttribute("lineaPedido", lineaPedidoRepository.findByPedido_Id(id));
         return "pedidos/detalles-pedido";
+    }
+    @GetMapping("pedidos/new")
+    public String newOrder(Model model, @RequestParam Long restauranteId) {
+        Restaurante restaurante = restauranteRepository.findById(restauranteId).orElseThrow();
+        Pedido pedido = new Pedido();
+        pedido.setRestaurante(restaurante);
+        model.addAttribute("pedido", pedido);
+        return "pedidos/form-pedido";
     }
 }

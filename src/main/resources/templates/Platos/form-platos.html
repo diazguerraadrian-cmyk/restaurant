@@ -5,7 +5,7 @@
 <nav th:replace="~{layout/navbar :: navbar}"></nav>
 <main class="container flex-grow-1 my-4">
     <h1 class="mb-0">
-        <i class="fa-solid fa-utensils text-primary me-2"></i>Formulario restaurante
+        <i class="fa-solid fa-utensils text-primary me-2"></i>Formulario plato
     </h1>
     <form th:action="@{/platos}" method="post" th:object="${plato}">
         <input type="hidden" th:field="*{id}">

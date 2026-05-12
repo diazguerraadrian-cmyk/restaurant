@@ -21,6 +21,25 @@ public class Pedido {
 
     private Double propina;
 
+    @Column(length = 500)
+    public String getSugerenciasUsuarios() {
+        return sugerenciasUsuarios;
+    }
+
+    public void setSugerenciasUsuarios(String sugerenciasUsuarios) {
+        this.sugerenciasUsuarios = sugerenciasUsuarios;
+    }
+
+    public TipoPedido getPedido() {
+        return pedido;
+    }
+
+    public void setPedido(TipoPedido pedido) {
+        this.pedido = pedido;
+    }
+
+    private String sugerenciasUsuarios;
+
     @Enumerated(EnumType.STRING)
     private TipoPedido pedido = TipoPedido.PENDING;
 
