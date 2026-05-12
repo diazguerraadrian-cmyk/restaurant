@@ -23,6 +23,8 @@
                 <i class="fa-solid fa-pencil me-1"></i> Editar restaurante
             </a>
 
+            <a class="btn btn-succes my-3" th:href="@{/pedidos/new(restauranteId=${restaurante.id})}"><i class="fa-solid fa-plus"></i>Hacer pedido</a>
+
             <span class="badge bg-success me-1">
                 <i class="fa-solid fa-euro-sign me-1"></i>
                 <span th:text="${restaurante.precioMedio != null ? restaurante.precioMedio + ' €' : 'Sin precio'}"></span>
