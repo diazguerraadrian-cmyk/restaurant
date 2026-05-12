@@ -253,6 +253,27 @@
         </div>
     </div>
 
+    <div th:if="${pedido.tipoPedido.name() != 'FINISHED'">
+        <h2>Selecciona los platos deseados</h2>
+
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            <div class="col" th:each="plato : ${platos}">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${plato.nombre}"></h5>
+                        <p class="text-muted small" th:text="${plato.descripcion}"></p>
+                        <strong th:text="|${#numbers.formatDecimal(plato.precio, 1, 2)} + ' €'|"></strong>
+                    </div>
+                    <div class="card-footer">
+                        <form th:action="@{pedidos/{id}/lineas(id=${pedido.id})}" method="post">
+                            <input type="hidden" name="platoId" th:value="${plato.id}">
+                            <button class="btn btn-sm btn-success"><i class="fa-solid fa-plus"></i>Añadir</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
 
 <footer th:replace="~{layout/footer :: footer}"></footer>

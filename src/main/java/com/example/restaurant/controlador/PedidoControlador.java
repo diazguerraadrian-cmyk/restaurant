@@ -1,9 +1,6 @@
 package com.example.restaurant.controlador;
 
-import com.example.restaurant.model.Pedido;
-import com.example.restaurant.model.Plato;
-import com.example.restaurant.model.Restaurante;
-import com.example.restaurant.model.TipoPedido;
+import com.example.restaurant.model.*;
 import com.example.restaurant.repository.LineaPedidoRepository;
 import com.example.restaurant.repository.PedidoRepository;
 import com.example.restaurant.repository.PlatoRepository;
@@ -15,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @AllArgsConstructor
@@ -58,5 +56,39 @@ public class PedidoControlador {
         pedido.setNumeroPersonas(1);
         pedidoRepository.save(pedido);
         return "redirect:/pedidos" + pedido.getId();
+    }
+    @PostMapping("pedidos/{id}/lineas")
+    public String addLineaPlato(@PathVariable Long id, @RequestParam Long platoId){
+        Pedido pedido = pedidoRepository.findById(id).orElseThrow();
+        Plato plato = platoRepository.findById(platoId).orElseThrow();
+        Optional<LineaPedido> lineaOptional = lineaPedidoRepository.findByPedido_IdAndPlato_Id(id, platoId);
+        LineaPedido lineaPedido;
+        if (lineaOptional.isPresent()) {
+            lineaPedido = lineaOptional.get();
+            lineaPedido.setCantidad(lineaPedido.getCantidad() + 1);
+            lineaPedidoRepository.save(lineaPedido);
+        } else {
+            lineaPedido = new LineaPedido();
+            lineaPedido.setPlato(plato);
+            lineaPedido.setCantidad(1);
+        }
+        lineaPedidoRepository.save(lineaPedido);
+        // opción alternativa estilo funcional
+        // LineaPedido linea = lineaPedidoRepository
+        // .findByPedido_IdAndPlato_Id(id, platoId)
+        // .orElseGet(() -> new LineaPedido(0, pedido, plato));
+//
+//        line.setQuantity(line.getQuantity() + 1);
+//        orderLineRepository.save(line);
+
+
+        if (pedido.getTipoPedido() == TipoPedido.PENDING) pedido.setTipoPedido(TipoPedido.IN_PROGRESS);
+        Double precioTotal = lineaPedidoRepository.calculatepreciototal(pedido.getId());
+        pedido.setPrecioTotal(precioTotal);
+        pedidoRepository.save(pedido);
+        return "redirect:/pedidos/" + pedido.getId();
+
+
+
     }
 }
