@@ -92,4 +92,12 @@ public class PedidoControlador {
 
 
     }
+    @GetMapping("pedidos/{id}/complete")
+    public String acabado(@PathVariable Long id) {
+        Pedido pedido = pedidoRepository.findById(id).orElseThrow();
+        pedido.setTipoPedido(TipoPedido.COMPLETED);
+        pedido.setPrecioTotal(lineaPedidoRepository.calculatepreciototal(pedido.getId()));
+        pedidoRepository.save(pedido);
+        return "redirect:/pedidos/" + id;
+    }
 }
