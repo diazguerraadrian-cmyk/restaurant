@@ -70,6 +70,7 @@ public class PedidoControlador {
         } else {
             lineaPedido = new LineaPedido();
             lineaPedido.setPlato(plato);
+            lineaPedido.setPedido(pedido);
             lineaPedido.setCantidad(1);
         }
         lineaPedidoRepository.save(lineaPedido);
