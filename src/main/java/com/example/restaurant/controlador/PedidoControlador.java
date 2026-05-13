@@ -93,10 +93,15 @@ public class PedidoControlador {
 
     }
     @GetMapping("pedidos/{id}/complete")
-    public String acabado(@PathVariable Long id) {
+    public String acabado(@PathVariable Long id, @RequestParam(required = false) Double propina) {
         Pedido pedido = pedidoRepository.findById(id).orElseThrow();
         pedido.setTipoPedido(TipoPedido.COMPLETED);
         pedido.setPrecioTotal(lineaPedidoRepository.calculatepreciototal(pedido.getId()));
+        if (propina != null && propina > 0){
+            pedido.setPropina(propina);
+        } else {
+            pedido.setPropina(0d);
+        }
         pedidoRepository.save(pedido);
         return "redirect:/pedidos/" + id;
     }
