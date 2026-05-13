@@ -196,7 +196,9 @@
                     <th class="text-center">Cantidad</th>
                     <th class="text-end">Precio</th>
                     <th class="text-end">Subtotal</th>
-                    <th class="text-end pe-3"></th>
+                    <th class="text-center">Ver</th>
+                    <th class="text-center" th:if="${pedido.tipoPedido.name() != 'COMPLETED'}">Modificar</th>
+                    <th class="text-center" th:if="${pedido.tipoPedido.name() != 'COMPLETED'}">Eliminar</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -224,12 +226,26 @@
                     </td>
                     <td class="text-end fw-semibold"
                         th:text="|${#numbers.formatDecimal(line.cantidad * line.plato.precio, 1, 2)} €|"></td>
-                    <td class="text-end pe-3">
+                    <td class="text-center">
                         <!--/*@thymesVar id="plato" type=""*/-->
                         <a th:href="@{/platos/{id}(id=${line.plato.id})}"
                            class="btn btn-sm btn-outline-primary"
                            title="Ver plato">
                             <i class="fa-regular fa-eye"></i>
+                        </a>
+                    </td>
+                    <td th:if="${pedido.tipoPedido.name() != 'COMPLETED'}" class="text-center">
+                        <form th:action="@{/pedidos/{pedidoId}/lineas/{lineaId}(pedidoId=${pedido.id},lineaId=${line.id}}" method="post" class="d-flex align-items-center justify-content-center gap-1">
+                            <input name="cantidad" type="number" min="1" th:value="${line.cantidad}" class="form-control form-control-sm">
+                            <button class="btn btn-sm btn-success">
+                                <i class="fa-solid fa-up-down"></i>
+                            </button>
+                        </form>
+                    </td>
+                    <td th:if="${pedido.tipoPedido.name() != 'COMPLETED'}" class="text-center">
+                        <a class="btn btn-sm btn danger" th:href="@{/pedidos/{pedidoId}/lineas/{lineaId}/delete(pedidoId=${pedido.id},lineaId=${line.id}}">
+                            <i class="fa-solid fa-trash"></i>
+                            Eliminar
                         </a>
                     </td>
                 </tr>

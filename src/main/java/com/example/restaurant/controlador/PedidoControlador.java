@@ -100,4 +100,26 @@ public class PedidoControlador {
         pedidoRepository.save(pedido);
         return "redirect:/pedidos/" + id;
     }
+    @PostMapping("pedidos/{pedidoId}/lineas/{lineaId}")
+    public String actualizarLinea(@PathVariable Long pedidoId, @PathVariable Long lineaId, @RequestParam Integer cantidad){
+        if (cantidad >= 1){
+            LineaPedido lineaPedido = lineaPedidoRepository.findById(lineaId).orElseThrow();
+            lineaPedido.setCantidad(cantidad);
+            lineaPedidoRepository.save(lineaPedido);
+            Pedido pedido = pedidoRepository.findById(pedidoId).orElseThrow();
+            Double precioTotal = lineaPedidoRepository.calculatepreciototal(pedido.getId());
+            pedido.setPrecioTotal(precioTotal);
+            pedidoRepository.save(pedido);
+        }
+        return "redirect:/pedidos/" + pedidoId;
+    }
+   @GetMapping("pedidos/{pedidoId}/lineas/{lineaId}/delete")
+   public String eliminarLineaPedido(@PathVariable Long pedidoId, @PathVariable Long lineaId) {
+       lineaPedidoRepository.deleteById(lineaId);
+       Pedido pedido = pedidoRepository.findById(pedidoId).orElseThrow();
+       Double precioTotal = lineaPedidoRepository.calculatepreciototal(pedido.getId());
+       pedido.setPrecioTotal(precioTotal);
+       pedidoRepository.save(pedido);
+       return "redirect:/pedidos/" + pedidoId;
+   }
 }
