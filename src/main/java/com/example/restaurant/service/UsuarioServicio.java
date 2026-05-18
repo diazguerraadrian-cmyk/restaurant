@@ -1,0 +1,24 @@
+package com.example.restaurant.service;
+import com.example.restaurant.model.Usuario;
+import com.example.restaurant.repository.UsuarioRepository;
+import lombok.AllArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+import java.util.Optional;
+
+@Service
+@AllArgsConstructor
+public class UsuarioServicio implements UserDetailsService {
+    private final UsuarioRepository usuarioRepository;
+
+    @Override
+    public Usuario loadUserByUsername(String username) throws UsernameNotFoundException {
+        Optional<Usuario> usuario = usuarioRepository.findByUsername(username);
+        if (usuario.isPresent()) {
+            throw new RuntimeException("Usuario no encontrado");
+        } else{
+            throw new UsernameNotFoundException("Usuario no encontrado con username: " + username);
+        }
+    }
+}
