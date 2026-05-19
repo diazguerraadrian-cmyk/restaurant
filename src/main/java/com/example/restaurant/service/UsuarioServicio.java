@@ -1,4 +1,5 @@
 package com.example.restaurant.service;
+import com.example.restaurant.dto.RegisterForm;
 import com.example.restaurant.model.Usuario;
 import com.example.restaurant.repository.UsuarioRepository;
 import lombok.AllArgsConstructor;
@@ -22,5 +23,8 @@ public class UsuarioServicio implements UserDetailsService {
         } else{
             throw new UsernameNotFoundException("Usuario no encontrado con username: " + username);
         }
+    }
+    public void register(RegisterForm form) {
+        // TODO
     }
 }
