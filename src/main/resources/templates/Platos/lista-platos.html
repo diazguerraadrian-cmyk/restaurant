@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:replace="~{layout/head :: head('Listado Platos')}"></head>
 
@@ -23,7 +23,10 @@
         <p class="mb-0 text-muted">Todavía no hay platos registrados</p>
     </div>
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <a th:href="@{platos/new}" class="btn btn-primary btn-sm mb-2"><i class="fa-solid fa-plus"></i>Crear plato</a>
+        <a sec:authorize="hasRole('ADMIN')" th:href="@{platos/new}" class="btn btn-primary btn-sm mb-2">
+            <i class="fa-solid fa-plus"></i>
+            Crear plato
+        </a>
     </div>
     <!-- Grid de platos -->
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3"
@@ -69,7 +72,7 @@
                        class="btn btn-sm btn-outline-primary flex-shrink-0">
                         <i class="fa-regular fa-eye me-1"></i>Ver
                     </a>
-                    <a th:href="@{/platos/editar/{id}(id=${restaurant.id})}"
+                    <a sec:authorize="hasRole('ADMIN')" th:href="@{/platos/editar/{id}(id=${restaurant.id})}"
                        class="btn btn-success btn-sm mt-2">
                         <i class="fa-solid fa-pencil me-1"></i> Editar plato
                     </a>

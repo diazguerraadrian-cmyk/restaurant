@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="~{layout/head :: head('Restaurantes')}"></head>
 <body class="d-flex flex-column min-vh-100">
 
@@ -9,7 +9,10 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="mb-0" th:text="${titulo}">Restaurantes</h1>
         <span class="badge bg-secondary fs-6" th:text="|${numRestaurantes} resultados|">0 resultados</span>
-        <a th:href="@{restaurantes/new}" class="btn btn-primary btn-sm mb-2"><i class="fa-solid fa-plus"></i>Crear restaurante</a>
+        <a sec:authorize="hasRole('ADMIN')" th:href="@{restaurantes/new}" class="btn btn-primary btn-sm mb-2">
+            <i class="fa-solid fa-plus"></i>
+            Crear restaurante
+        </a>
     </div>
     <div class="mb-3">
         <h5>Filtros rápidos</h5>
@@ -71,11 +74,11 @@
                        class="btn btn-outline-primary btn-sm w-100">
                         <i class="fa-regular fa-eye me-1"></i> Ver restaurante
                     </a>
-                    <a th:href="@{/Restaurantes/desactivar/{id}(id=${restaurant.id})}"
+                    <a sec:authorize="hasRole('ADMIN')" th:href="@{/Restaurantes/desactivar/{id}(id=${restaurant.id})}"
                        class="btn btn-warning btn-sm mt-2">
                         <i class="fa-solid fa-ban me-1"></i> Desactivar restaurante
                     </a>
-                    <a th:href="@{/Restaurantes/editar/{id}(id=${restaurant.id})}"
+                    <a sec:authorize="hasRole('ADMIN')" th:href="@{/Restaurantes/editar/{id}(id=${restaurant.id})}"
                        class="btn btn-success btn-sm mt-2">
                         <i class="fa-solid fa-pencil me-1"></i> Editar restaurante
                     </a>
