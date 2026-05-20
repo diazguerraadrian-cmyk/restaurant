@@ -48,6 +48,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/pedidos/new").hasRole("USER")
                         .requestMatchers(HttpMethod.GET, "/plato/**").hasRole("USER")
 
+                        .requestMatchers("/pedidos", "/pedidos/**").authenticated()
+
                         .anyRequest().authenticated()
 
 

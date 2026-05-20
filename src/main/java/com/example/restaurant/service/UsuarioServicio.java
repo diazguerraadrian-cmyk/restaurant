@@ -37,6 +37,7 @@ public class UsuarioServicio implements UserDetailsService {
         if (!form.getPassword().equals(form.getPasswordConfirm())) {
             throw new RuntimeException("Las contraseñas no coinciden");
         }
+      //  if (! form.getAccepTermsandConditions())
 
         Usuario usuario = new Usuario();
         usuario.setUsername(form.getUsername());
