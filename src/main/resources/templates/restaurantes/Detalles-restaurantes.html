@@ -13,12 +13,12 @@
             <h1 class="mb-2" th:text="${restaurante.nombre}">Nombre
             </h1>
 
-            <a th:href="@{/Restaurantes/desactivar/{id}(id=${restaurant.id})}"
+            <a sec:authorize="hasRole('ADMIN')" th:href="@{/Restaurantes/desactivar/{id}(id=${restaurant.id})}"
                class="btn btn-warning btn-sm mt-2">
                 <i class="fa-solid fa-ban me-1"></i> Desactivar restaurante
             </a>
 
-            <a th:href="@{/Restaurantes/editar/{id}(id=${restaurant.id})}"
+            <a sec:authorize="hasRole('ADMIN')" th:href="@{/Restaurantes/editar/{id}(id=${restaurant.id})}"
                class="btn btn-success btn-sm mt-2">
                 <i class="fa-solid fa-pencil me-1"></i> Editar restaurante
             </a>
@@ -93,6 +93,10 @@
     <h2 class="mt-5">
         <i class="fa-regular fa-comments text-primary me-2"></i> Opiniones de nuestros clientes
     </h2>
+
+    <a sec:authorize="isAuthenticated()" class="btn btn-success" th:href="@{/reviews/new(restauranteId=${restaurante.id})}">
+        <i class="fa-solid fa-plus"></i> Escribir reseña
+    </a>
 
     <div th:if="${reviews.isEmpty()}" class="alert alert-light border">
         <i class="fa-regular fa-face-smile me-1"></i>
