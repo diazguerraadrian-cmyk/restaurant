@@ -28,4 +28,7 @@ public class Review {
     @ToString.Exclude
     @ManyToOne
     private Plato plato;
+    @ToString.Exclude
+    @ManyToOne
+    private Usuario usuario;
 }

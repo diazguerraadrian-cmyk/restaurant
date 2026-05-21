@@ -47,6 +47,9 @@ public class Pedido {
     @JoinColumn
     private Restaurante restaurante;
 
+    @ManyToOne
+    private Usuario usuario;
+
     public Long getId() {
         return id;
     }
