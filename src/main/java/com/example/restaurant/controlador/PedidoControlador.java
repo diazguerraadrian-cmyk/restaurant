@@ -26,7 +26,12 @@ public class PedidoControlador {
     // @GetMapping orders
     // filtrar por restaurante, filtrar por usuario
     @GetMapping("pedidos")
-    public String orders(Model model) {
+    public String orders(Model model, @AuthenticationPrincipal Usuario user) {
+        if (user.getRole() == Role.ROLE_ADMIN){
+            model.addAttribute("pedidos",  pedidoRepository.findAll());
+        } else {
+            model.addAttribute("pedidos",  pedidoRepository.findByUser_IdOrderByDateDesc(user.getId()));
+        }
         model.addAttribute("pedidos",  pedidoRepository.findAll());
         return "pedidos/lista-pedidos";
     }
@@ -37,6 +42,8 @@ public class PedidoControlador {
         Pedido pedido = pedidoRepository.findById(id).orElseThrow();
         model.addAttribute("pedido", pedidoRepository.findById(id).orElseThrow());
         model.addAttribute("lineaPedido", lineaPedidoRepository.findByPedido_Id(id));
+        model.addAttribute("countUserOrders", pedidoRepository.countByUserId(pedido.getUser().getId()));
+        model.addAttribute("totalMoneyUserSpent", pedidoRepository.calculateTotalMoneySpentByUserId(pedido.getUser().getId()));
         List<Plato> platos = platoRepository.findByRestauranteIdOrderByPrecio(pedido.getRestaurante().getId());
         model.addAttribute("platos", platos);
         return "pedidos/detalles-pedido";
@@ -53,7 +60,7 @@ public class PedidoControlador {
     public String guardarPedido(@ModelAttribute Pedido pedido, @AuthenticationPrincipal Usuario user){
         pedido.setTipoPedido(TipoPedido.PENDING);
         pedido.setFechaPedido(LocalDateTime.now());
-        pedido.setUsuario(user);
+        pedido.setUser(user);
         pedido.setPrecioTotal(0d);
         pedido.setNumeroPersonas(1);
         pedidoRepository.save(pedido);

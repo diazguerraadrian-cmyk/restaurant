@@ -39,4 +39,5 @@ public class Datainitializer implements ApplicationRunner {
                 .role(Role.ROLE_ADMIN)
                 .build());
     }
+
 }
