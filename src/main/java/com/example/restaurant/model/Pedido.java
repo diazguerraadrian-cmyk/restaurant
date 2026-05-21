@@ -47,8 +47,17 @@ public class Pedido {
     @JoinColumn
     private Restaurante restaurante;
 
+
+    public Usuario getUser() {
+        return user;
+    }
+
+    public void setUser(Usuario user) {
+        this.user = user;
+    }
+
     @ManyToOne
-    private Usuario usuario;
+    private Usuario user;
 
     public Long getId() {
         return id;

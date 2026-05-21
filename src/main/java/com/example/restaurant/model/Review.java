@@ -30,5 +30,5 @@ public class Review {
     private Plato plato;
     @ToString.Exclude
     @ManyToOne
-    private Usuario usuario;
+    private Usuario user;
 }

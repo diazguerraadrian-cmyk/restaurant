@@ -6,6 +6,7 @@ import com.example.restaurant.repository.PedidoRepository;
 import com.example.restaurant.repository.PlatoRepository;
 import com.example.restaurant.repository.RestauranteRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -49,9 +50,10 @@ public class PedidoControlador {
         return "pedidos/form-pedido";
     }
     @PostMapping("pedidos")
-    public String guardarPedido(@ModelAttribute Pedido pedido){
+    public String guardarPedido(@ModelAttribute Pedido pedido, @AuthenticationPrincipal Usuario user){
         pedido.setTipoPedido(TipoPedido.PENDING);
         pedido.setFechaPedido(LocalDateTime.now());
+        pedido.setUsuario(user);
         pedido.setPrecioTotal(0d);
         pedido.setNumeroPersonas(1);
         pedidoRepository.save(pedido);

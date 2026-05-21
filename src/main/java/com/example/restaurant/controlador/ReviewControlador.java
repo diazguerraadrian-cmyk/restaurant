@@ -2,10 +2,12 @@ package com.example.restaurant.controlador;
 
 import com.example.restaurant.model.Plato;
 import com.example.restaurant.model.Review;
+import com.example.restaurant.model.Usuario;
 import com.example.restaurant.repository.PlatoRepository;
 import com.example.restaurant.repository.RestauranteRepository;
 import com.example.restaurant.repository.ReviewRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -56,7 +58,8 @@ public class ReviewControlador {
         return "reviews/form-review";
     }
     @PostMapping("reviews")
-    public String guardarReview(@ModelAttribute Review review){
+    public String guardarReview(@ModelAttribute Review review, @AuthenticationPrincipal Usuario user) {
+        review.setUsuario(user);
         reviewRepository.save(review);
         if (review.getRestaurante() != null)
             return "redirect:/Restaurantes/" + review.getRestaurante().getId();
