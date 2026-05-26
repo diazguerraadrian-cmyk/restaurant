@@ -53,6 +53,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/plato/**").hasRole("USER")
 
                         .requestMatchers("/pedidos", "/pedidos/**").authenticated()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
 
                         .anyRequest().authenticated()
 

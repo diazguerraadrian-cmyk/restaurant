@@ -59,7 +59,7 @@ public class ReviewControlador {
     }
     @PostMapping("reviews")
     public String guardarReview(@ModelAttribute Review review, @AuthenticationPrincipal Usuario user) {
-        review.setUsuario(user);
+        review.setUser(user);
         reviewRepository.save(review);
         if (review.getRestaurante() != null)
             return "redirect:/Restaurantes/" + review.getRestaurante().getId();
