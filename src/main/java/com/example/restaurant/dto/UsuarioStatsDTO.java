@@ -9,7 +9,7 @@ import java.util.List;
 public record UsuarioStatsDTO(
     long countReviews,
     List<Review> reviews,
-    long countOrders,
+    long countPedidos,
     List<Pedido> pedidos,
     double totalMoneySpent
 ){
