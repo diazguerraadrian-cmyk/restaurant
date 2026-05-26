@@ -16,9 +16,10 @@ public class UsuarioController {
         return "usuarios/lista-usuarios";
     }
 
-    @GetMapping("admin/Usuarios/{id}")
+    @GetMapping("admin/usuarios/{id}")
     public String usuario(Model model, @PathVariable Long id){
         model.addAttribute("usuario", usuarioServicio.findById(id));
+        model.addAttribute("usuario", usuarioServicio.findStatsById(id));
         return "usuarios/detalles-usuario";
     }
 }

@@ -1,11 +1,12 @@
 package com.example.restaurant.service;
 import com.example.restaurant.dto.RegisterForm;
+import com.example.restaurant.dto.UsuarioStatsDTO;
 import com.example.restaurant.model.Role;
 import com.example.restaurant.model.Usuario;
+import com.example.restaurant.repository.PedidoRepository;
+import com.example.restaurant.repository.ReviewRepository;
 import com.example.restaurant.repository.UsuarioRepository;
 import lombok.AllArgsConstructor;
-import org.jspecify.annotations.Nullable;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,6 +20,8 @@ import java.util.Optional;
 public class UsuarioServicio implements UserDetailsService {
     private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
+    private final ReviewRepository reviewRepository;
+    private final PedidoRepository pedidoRepository;
 
     @Override
     public Usuario loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -56,5 +59,14 @@ public class UsuarioServicio implements UserDetailsService {
     }
     public Usuario findById(Long id) {
         return usuarioRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+    }
+    public UsuarioStatsDTO findStatsById(Long id){
+        return new UsuarioStatsDTO(
+        reviewRepository.countByUser_Id(id),
+        reviewRepository.findByUser_Id(id),
+        pedidoRepository.countByUser_Id(id),
+        pedidoRepository.findByUser_IdOrderByDateDesc(id),
+        pedidoRepository.calculateTotalMoneySpentByUserId(id)
+        );
     }
 }

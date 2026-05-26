@@ -13,9 +13,11 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
     long countByUserId(Long id);
 
     @Query("""
-    SELECT SUM(p.totalPrice) from Pedido p where p.user.id = :userId
+    SELECT COALESCE(SUM(p.totalPrice), 0.0) from Pedido p where p.user.id = :userId
     """)
     double calculateTotalMoneySpentByUserId(Long Id);
+
+    long countByUser_Id(Long id);
 
     // findByRestauranteId
 }
