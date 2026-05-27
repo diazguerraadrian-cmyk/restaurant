@@ -89,6 +89,15 @@ public class UsuarioServicio implements UserDetailsService {
     }
     public Usuario update(Usuario userForm){
         Usuario userDB = findById(userForm.getId());
+        Optional<Usuario> userOPT = usuarioRepository.findByUsername(userForm.getUsername());
+        if (userOPT.isPresent() && !userOPT.get().getId().equals(userForm.getId()))
+            throw new IllegalArgumentException("El nombre de usuario ya existe");
+        // lo mismo para el email pero en estilo programación funcional
+        usuarioRepository.findByEmail(userForm.getEmail())
+                .filter(user -> !user.getId().equals(userForm.getId()))
+                .ifPresent(user -> {
+                    throw new IllegalArgumentException("El email de usuario ya existe");
+                });
         userDB.setUsername(userForm.getUsername());
         userDB.setEmail(userForm.getEmail());
         userDB.setRole(userForm.getRole());
