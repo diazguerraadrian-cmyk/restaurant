@@ -37,6 +37,7 @@
             <input type="password" th:field="*{password}"
                    class="form-control" id="password"
                    th:required="${!edit}" minlength="4">
+            <small class="text-muted">Deja este campo vacío para conservar la misma contraseña.</small>
         </div>
 
         <div class="form-floating mb-3">

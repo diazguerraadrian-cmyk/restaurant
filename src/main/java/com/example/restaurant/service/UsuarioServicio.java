@@ -87,7 +87,14 @@ public class UsuarioServicio implements UserDetailsService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return usuarioRepository.save(user);
     }
-    public Usuario update(Usuario user){
+    public Usuario update(Usuario userForm){
+        Usuario userDB = findById(userForm.getId());
+        userDB.setUsername(userForm.getUsername());
+        userDB.setEmail(userForm.getEmail());
+        userDB.setRole(userForm.getRole());
 
+        if (!StringUtils.hasText(userForm.getPassword()))
+            userForm.setPassword(passwordEncoder.encode(userForm.getPassword()));
+        return usuarioRepository.save(userDB);
     }
 }
