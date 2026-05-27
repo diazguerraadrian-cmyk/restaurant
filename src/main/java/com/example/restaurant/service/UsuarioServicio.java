@@ -51,6 +51,7 @@ public class UsuarioServicio implements UserDetailsService {
         usuario.setEmail(form.getEmail());
         usuario.setPassword(passwordEncoder.encode(form.getPassword()));
         usuario.setRole(Role.ROLE_USER);
+        usuario.setActive(true);
         return usuarioRepository.save(usuario);
 
     }
