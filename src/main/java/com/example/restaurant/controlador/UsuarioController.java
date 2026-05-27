@@ -1,5 +1,7 @@
 package com.example.restaurant.controlador;
 
+import com.example.restaurant.model.Role;
+import com.example.restaurant.model.Usuario;
 import com.example.restaurant.service.UsuarioServicio;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,5 +23,12 @@ public class UsuarioController {
         model.addAttribute("usuario", usuarioServicio.findById(id));
         model.addAttribute("usuario", usuarioServicio.findStatsById(id));
         return "usuarios/detalles-usuario";
+    }
+    @GetMapping("admin/usuarios/new")
+    public String nuevoUsuario(Model model){
+        model.addAttribute("usuario", new Usuario());
+        model.addAttribute("roles", Role.values());
+        model.addAttribute("edit", false);
+        return "users/user-form";
     }
 }
