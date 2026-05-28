@@ -2,6 +2,7 @@ package com.example.restaurant.controlador;
 
 import com.example.restaurant.model.Role;
 import com.example.restaurant.model.Usuario;
+import com.example.restaurant.service.FileService;
 import com.example.restaurant.service.UsuarioServicio;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +16,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @AllArgsConstructor
 @Controller
 public class UsuarioController {
-    private UsuarioServicio usuarioServicio;
+    private final FileService fileService;
+    private final UsuarioServicio usuarioServicio;
 
     @GetMapping("admin/usuarios")
     public String listaUsuarios(Model model){
