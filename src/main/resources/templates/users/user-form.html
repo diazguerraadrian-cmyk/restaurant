@@ -52,6 +52,21 @@
             </select>
         </div>
 
+        <div class="form-floating mb-3" th:if="${edit}">
+            <label class="form-check-label" for="active">Activo</label>
+            <input type="checkbox" th:field="*{active}"
+                   class="form-check-input" id="active" accept="image/*"
+            >
+            <img th:if="*{user != null and user.imageUrl != null}" th:src="@{*{imageUrl}}" class="mt-2 img-thumbnail" height="100" alt="user avatar">
+        </div>
+
+        <div class="form-floating mb-3" th:if="${edit}">
+            <label class="form-label" for="imageFile">Imagen</label>
+            <input type="file" name="imageFile"
+                   class="form-control" id="imageFile"
+            >
+        </div>
+
         <button type="submit" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i>Guardar</button>
 
         <a th:href="@{/admin/users}" class="btn btn-secondary">Cancelar</a>

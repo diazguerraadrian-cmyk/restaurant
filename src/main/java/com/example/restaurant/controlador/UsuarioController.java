@@ -3,14 +3,16 @@ package com.example.restaurant.controlador;
 import com.example.restaurant.model.Role;
 import com.example.restaurant.model.Usuario;
 import com.example.restaurant.service.UsuarioServicio;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+@Slf4j
+@AllArgsConstructor
 @Controller
 public class UsuarioController {
     private UsuarioServicio usuarioServicio;
@@ -44,7 +46,11 @@ public class UsuarioController {
         return "users/user-form";
     }
     @PostMapping("admin/usuarios")
-    public String save(@ModelAttribute Usuario user, RedirectAttributes ra){
+    public String save(@ModelAttribute Usuario user, RedirectAttributes ra,
+                       @RequestParam("imageFile")MultipartFile imageFile){
+        log.info("Guardando usuario {}", user.getUsername());
+        log.info("Imagen recibida {}", imageFile);
+
         try {
             if (user.getId() == null) {
                 usuarioServicio.create(user);
@@ -54,6 +60,7 @@ public class UsuarioController {
                 ra.addFlashAttribute("message", "usuario actualizado");
             }
         } catch (Exception e){
+            log.warn("Error guardando user {}", user, e);
             ra.addFlashAttribute("error", e.getMessage());
             return user.getId() == null ?
                     "redirect:/admin/usuarios/new" : "redirect:/admin/usuarios/edit/" + user.getId();

@@ -37,6 +37,8 @@ public class Usuario implements UserDetails {
 
     private Boolean active;
 
+    private String imageUrl;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
