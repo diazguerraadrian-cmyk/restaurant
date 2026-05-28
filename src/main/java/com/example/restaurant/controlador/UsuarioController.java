@@ -53,6 +53,10 @@ public class UsuarioController {
         log.info("Guardando usuario {}", user.getUsername());
         log.info("Imagen recibida {}", imageFile);
 
+        String imageUrl = fileService.store(imageFile);
+        if (imageUrl != null)
+            user.setImageUrl(imageUrl);
+
         try {
             if (user.getId() == null) {
                 usuarioServicio.create(user);
