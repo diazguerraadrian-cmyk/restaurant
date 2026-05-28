@@ -6,6 +6,7 @@ import com.example.restaurant.service.FileService;
 import com.example.restaurant.service.UsuarioServicio;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -72,5 +73,11 @@ public class UsuarioController {
                     "redirect:/admin/usuarios/new" : "redirect:/admin/usuarios/edit/" + user.getId();
         }
         return "redirect:/admin/usuarios";
+    }
+    @GetMapping("profile")
+    public String profile(Model model, @AuthenticationPrincipal Usuario user) {
+        model.addAttribute("user", usuarioServicio.findById(user.getId())); // User
+        model.addAttribute("userStats", usuarioServicio.findStatsById(user.getId())); // UserStatsDTO
+        return "users/user-detail";
     }
 }
