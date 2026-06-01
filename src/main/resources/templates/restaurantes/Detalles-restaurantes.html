@@ -27,6 +27,19 @@
                 <i class="fa-solid fa-plus"></i>
                 Hacer pedido
             </a>
+            <form sec:authorize="isAuthenticated()"
+                  th:action="@{/favorites/toggle}"
+                  method="post">
+                  <input type="hidden" name="targetType" th:value="RESTAURANTE">
+                  <input type="hidden" name="targetId" th:value="${restaurante.id}">
+                  <input type="hidden" name="redirectUrl" th:value="@{/Restaurantes/{id}(id=${restaurante.id})}">
+                <button class="btn btn-sm" type="submit"
+                        th:classappend="${favoriteRestauranteIds.contains(restaurante.id)} ?
+                        'btn-danger' : 'btn-outline-danger'">
+                    <i th:classappend="${favoriteRestauranteIds.contains(restaurante.id)} ? 'fa-solid fa-heart' : '"></i>
+                    Guardar favorito
+                </button>
+            </form>
 
             <span class="badge bg-success me-1">
                 <i class="fa-solid fa-euro-sign me-1"></i>
