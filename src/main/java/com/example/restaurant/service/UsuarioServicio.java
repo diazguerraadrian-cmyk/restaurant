@@ -23,6 +23,7 @@ public class UsuarioServicio implements UserDetailsService {
     private final PasswordEncoder passwordEncoder;
     private final ReviewRepository reviewRepository;
     private final PedidoRepository pedidoRepository;
+    private final FavoriteService favoriteService;
 
     @Override
     public Usuario loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -68,7 +69,9 @@ public class UsuarioServicio implements UserDetailsService {
         reviewRepository.findByUser_Id(id),
         pedidoRepository.countByUser_Id(id),
         pedidoRepository.findByUser_IdOrderByDateDesc(id),
-        pedidoRepository.calculateTotalMoneySpentByUserId(id)
+        pedidoRepository.calculateTotalMoneySpentByUserId(id),
+        favoriteService.findFavoriteRestaurantes(id),
+        favoriteService.findFavoritePlatos(id)
         );
     }
 
