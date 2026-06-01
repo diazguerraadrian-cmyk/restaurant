@@ -1,13 +1,12 @@
 package com.example.restaurant.controlador;
 
-import com.example.restaurant.model.Plato;
-import com.example.restaurant.model.Restaurante;
-import com.example.restaurant.model.Review;
-import com.example.restaurant.model.TipoComida;
+import com.example.restaurant.model.*;
 import com.example.restaurant.repository.PlatoRepository;
 import com.example.restaurant.repository.RestauranteRepository;
 import com.example.restaurant.repository.ReviewRepository;
+import com.example.restaurant.service.FavoriteService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +22,7 @@ public class RestauranteControlador {
     private final RestauranteRepository restauranteRepository;
     private final PlatoRepository platoRepository;
     private final ReviewRepository reviewRepository;
+    private final FavoriteService favoriteService;
 
 
     @GetMapping("restaurantes")
@@ -43,7 +43,7 @@ public class RestauranteControlador {
     }
 
     @GetMapping("Restaurantes/{id}")
-    public String detallesRestaurante(@PathVariable Long id, Model model){
+    public String detallesRestaurante(@PathVariable Long id, Model model, @AuthenticationPrincipal Usuario user){
 
         Optional<Restaurante> restauranteOptional = restauranteRepository.findById(id);
         if (restauranteOptional.isPresent()){
@@ -56,6 +56,10 @@ public class RestauranteControlador {
             // reviews
             List<Review> reviews = reviewRepository.findByRestaurante_IdOrderByFechacreadaDesc(restaurante.getId());
             model.addAttribute("reviews", reviews);
+            if(user != null) {
+                model.addAttribute("favoriteRestauranteIds",
+                        favoriteService.findRestaurantesIdsByUsuario_Id(user.getId()));
+            }
 
             return "restaurantes/Detalles-restaurantes";
 

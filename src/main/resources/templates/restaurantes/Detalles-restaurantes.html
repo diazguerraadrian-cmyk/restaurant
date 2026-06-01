@@ -37,7 +37,8 @@
                         th:classappend="${favoriteRestauranteIds.contains(restaurante.id)} ?
                         'btn-danger' : 'btn-outline-danger'">
                     <i th:classappend="${favoriteRestauranteIds.contains(restaurante.id)} ? 'fa-solid fa-heart' : '"></i>
-                    Guardar favorito
+                    <span th:if="${favoriteRestauranteIds.contains(restaurante.id)}">Quitar favorito</span>
+                    <span th:unless="${favoriteRestauranteIds.contains(restaurante.id)}">Añadir favorito</span>
                 </button>
             </form>
 
