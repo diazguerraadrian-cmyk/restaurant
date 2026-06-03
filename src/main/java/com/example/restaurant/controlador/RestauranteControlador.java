@@ -5,11 +5,13 @@ import com.example.restaurant.repository.PlatoRepository;
 import com.example.restaurant.repository.RestauranteRepository;
 import com.example.restaurant.repository.ReviewRepository;
 import com.example.restaurant.service.FavoriteService;
+import com.example.restaurant.service.FileService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -23,6 +25,7 @@ public class RestauranteControlador {
     private final PlatoRepository platoRepository;
     private final ReviewRepository reviewRepository;
     private final FavoriteService favoriteService;
+    private final FileService fileService;
 
 
     @GetMapping("restaurantes")
@@ -99,8 +102,14 @@ public class RestauranteControlador {
     }
 
     @PostMapping("restaurantes")
-    public String crearRestaurante(@ModelAttribute Restaurante restaurante) {
-        System.out.println("RESTAURANTE RECIBIDO: " + restaurante);
+    public String crearRestaurante(@ModelAttribute Restaurante restaurante,
+                                   @RequestParam("imageFile") MultipartFile imageFile) {
+
+        String imageUrl = fileService.store(imageFile);
+        if (imageUrl != null)
+            restaurante.setImageUrl(imageUrl);
+
+
         restauranteRepository.save(restaurante);
         return "redirect:/restaurantes/" + restaurante.getId();
     }

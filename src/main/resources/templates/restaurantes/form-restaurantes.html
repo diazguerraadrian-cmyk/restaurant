@@ -52,6 +52,17 @@
             <label for="activo" class="form-check-label">Restaurante activo</label>
         </div>
 
+        <div class="form-floating mb-3" th:if="${edit}">
+            <label class="form-label" for="imageFile">Imagen</label>
+            <input type="hidden" th:field="*{imageUrl}">
+            <input type="file" name="imageFile"
+                   class="form-control" id="imageFile" accept="image/*"
+            >
+            <img id="preview" alt="Previsualización" class="mt-2 rounded"
+                 style="max-height:150px; display:none"
+                 th:src="${restaurante != null and restaurante.imageUrl != null ? restaurante.imageUrl : null}">
+        </div>
+
         <button type="submit" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i>Guardar</button>
 
         <a th:href="@{/restaurantes}" class="btn btn-secondary">Cancelar</a>
@@ -63,5 +74,6 @@
 
 <footer th:replace="~{layout/footer :: footer}"></footer>
 <script th:replace="~{layout/footer :: scripts}"></script>
+<script th:src="@{/js/img-preview.js}"></script>
 </body>
 </html>

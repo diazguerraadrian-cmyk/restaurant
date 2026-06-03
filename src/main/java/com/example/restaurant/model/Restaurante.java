@@ -34,6 +34,16 @@ public class Restaurante {
     @Column(name = "tipo_comida")
     private TipoComida tipoComida = TipoComida.SPANISH;
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    private String imageUrl;
+
     public TipoComida getTipoComida() {
         return tipoComida;
     }
