@@ -6,10 +6,12 @@ import com.example.restaurant.model.Usuario;
 import com.example.restaurant.repository.PlatoRepository;
 import com.example.restaurant.repository.RestauranteRepository;
 import com.example.restaurant.repository.ReviewRepository;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -58,7 +60,13 @@ public class ReviewControlador {
         return "reviews/form-review";
     }
     @PostMapping("reviews")
-    public String guardarReview(@ModelAttribute Review review, @AuthenticationPrincipal Usuario user) {
+    public String guardarReview(@Valid @ModelAttribute Review review,
+                                BindingResult bindingResult,
+                                @AuthenticationPrincipal Usuario user) {
+        if (bindingResult.hasErrors()) {
+            return "reviews/form-review";
+        }
+
         review.setUser(user);
         reviewRepository.save(review);
         if (review.getRestaurante() != null)

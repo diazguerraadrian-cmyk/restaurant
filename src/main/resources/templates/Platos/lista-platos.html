@@ -34,6 +34,10 @@
         <div class="col" th:each="plato : ${platos}">
             <div class="card h-100 shadow-sm border-0">
                 <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                    <img th:if="${plato.imageUrl}" th:src="@{${plato.imageUrl}}"
+                         class="img-fluid rounded mb-3" style="max-width: 150px" alt="foto plato">
+                    <img th:unless="${plato.imageUrl}" th:src="@{/uploads/plato.imageUrl}"
+                         class="img-fluid rounded mb-3" style="max-width: 150px" alt="foto plato">
                             <span th:switch="${plato.tipoPlato}">
                                 <span class="badge bg-success" th:case="${T(com.example.restaurant.model.TipoPlato).PRIMERO}">
                                     <i class="fa-solid fa-leaf me-1"></i>Entrantes

@@ -7,7 +7,7 @@
     <h1 class="mb-0">
         <i class="fa-solid fa-utensils text-primary me-2"></i>Formulario plato
     </h1>
-    <form th:action="@{/platos}" method="post" th:object="${plato}">
+    <form th:action="@{/platos}" method="post" th:object="${plato}" enctype="multipart/form-data">
         <input type="hidden" th:field="*{id}">
 
         <div class="mb-3">
@@ -51,6 +51,6 @@
 </main>
 <footer th:replace="~{layout/footer :: footer}"></footer>
 <script th:replace="~{layout/footer :: scripts}"></script>
-
+<script th:src="@{/js/img-preview.js}"></script>
 </body>
 </html>

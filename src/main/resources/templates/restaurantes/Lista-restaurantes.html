@@ -55,19 +55,19 @@
         </form>
     </div>
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
-        <div class="col" th:each="restaurant : ${restaurantes}">
-            <div class="card card-restaurant h-100 shadow-sm">
-                <img th:if="${restaurant.imageUrl}" th:src="@{${restaurant.imageUrl}}"
+        <div class="col" th:each="restaurante : ${restaurantes}">
+            <div class="card card-restaurante h-100 shadow-sm">
+                <img th:if="${restaurante.imageUrl}" th:src="@{${restaurante.imageUrl}}"
                      class="img-fluid rounded mb-3" style="max-width: 150px" alt="foto restaurante">
                 <div class="card-body">
                     <h5 class="card-title">
                         <i class="fa-solid fa-store text-primary me-2"></i>
-                        <span th:text="${restaurant.nombre}">Nombre</span>
+                        <span th:text="${restaurante.nombre}">Nombre</span>
                     </h5>
                     <p class="card-text">
                         <span class="badge bg-success">
                             <i class="fa-solid fa-euro-sign me-1"></i>
-                            <span th:text="${restaurant.precioMedio}">0</span>
+                            <span th:text="${restaurante.precioMedio}">0</span>
                         </span>
                     </p>
                 </div>

@@ -7,13 +7,12 @@ import com.example.restaurant.model.TipoPlato;
 import com.example.restaurant.repository.PlatoRepository;
 import com.example.restaurant.repository.RestauranteRepository;
 import com.example.restaurant.repository.ReviewRepository;
+import com.example.restaurant.service.FileService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +24,7 @@ public class PlatoControlador {
     private final PlatoRepository platoRepository;
     private final ReviewRepository reviewRepository;
     private final RestauranteRepository restauranteRepository;
+    private final FileService fileService;
 
 
     @GetMapping("platos")
@@ -68,7 +68,12 @@ public class PlatoControlador {
 
 
     @PostMapping("platos")
-    public String guardarPlato(@ModelAttribute Plato plato) {
+    public String guardarPlato(@ModelAttribute Plato plato,
+                               @RequestParam("imageFile") MultipartFile imageFile) {
+
+        String imageUrl = fileService.store(imageFile);
+        if (imageUrl != null)
+            plato.setImageUrl(imageUrl);
         platoRepository.save(plato);
         return "redirect:/platos";
     }
