@@ -61,8 +61,28 @@ public class PlatoRestControlador {
         );
     }
 
+    @PutMapping("dishes/{id}")
+    public ResponseEntity<Plato> update(
+            @PathVariable Long id,
+            @RequestBody Plato plato
+    ) {
+        Plato existing = platoRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Dish " + id + " not found")
+        );
+        existing.setNombre(plato.getNombre());
+        existing.setPrecio(plato.getPrecio());
+        existing.setImageUrl(plato.getImageUrl());
+        existing.setDescripcion(plato.getDescripcion());
+        existing.setTipoPlato(plato.getTipoPlato());
+
+        existing.setRestaurante(resolveRestaurante(plato)); // asociación
+
+        return ResponseEntity.ok(platoRepository.save(existing));
+    }
+
     @PutMapping("platos/{id}")
-    public ResponseEntity<Plato> update(@PathVariable Long id, @RequestBody Plato plato) {
+    public ResponseEntity<Plato> updatePartial(@PathVariable Long id, @RequestBody Plato plato) {
         if (plato.getId() == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Plato ID must not be null");
         }
